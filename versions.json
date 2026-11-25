@@ -1,0 +1,15 @@
+{
+  "orca": "1.4.274",
+  "source": "https://github.com/stablyai/orca/releases/tag/v1.4.274",
+  "license": "MIT",
+  "server_sha256": "b2f34c5a80e5b00f2b260833c1f9869e40e5e499cb2e9693e585a6c029c1c7ca",
+  "desktop_deb_sha256": "96a2abd7172ac81338fe280678cdad4bd032c6d1591b11957acecae50ca54188",
+  "web_client": "official matching renderer files from desktop .deb; app code unchanged",
+  "codex": "0.172.0",
+  "codex_package": "https://www.npmjs.com/package/@openai/codex/v/0.172.0",
+  "codex_integrity": "sha512-yHf/6wbw4Zvha2M2ylDhDrU9FgfKLYgV6xSzSjlz3gxQNsiVLkXo+fPGwBqvP0A5geLtZs9wAbq+1v7+ZVWJ0g==",
+  "service": "professorit-orca-native.service",
+  "url": "http://localhost:3040/",
+  "rollback_tag": "rollback/orca-before-native-2026-11-25",
+  "node": "24.22.1, bundled with Orca"
+}

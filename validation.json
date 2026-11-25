@@ -1,0 +1,28 @@
+{
+  "date": "2026-11-25",
+  "orca": "1.4.274",
+  "codex": "0.172.0",
+  "model": "gpt-6.1-sol",
+  "service": "professorit-orca-native.service",
+  "user": "orca",
+  "install": "/opt/orca",
+  "repository": "https://github.com/alphaserver777/orca",
+  "checks": {
+    "native_service_active": true,
+    "old_docker_service_inactive": true,
+    "chatgpt_login_preserved": true,
+    "old_chat_readable": true,
+    "http_200": true,
+    "native_agent_user_orca": true,
+    "native_agent_no_dockerenv": true,
+    "four_shell_wrappers_valid": true,
+    "migration_python_syntax_valid": true,
+    "smoke_worktree_clean": true
+  },
+  "command_access": "Full access selected explicitly by owner; ordinary Linux user permissions, no Codex command sandbox or systemd filesystem restrictions.",
+  "git_access": "Public HTTPS fetch; SSH pushes by administrator. No administrator private key copied to agents.",
+  "limits": [
+    "Phone connection not configured.",
+    "Full VibeForge/PurpleFlow workflow stages not configured."
+  ]
+}

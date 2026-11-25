@@ -1,0 +1,24 @@
+http:
+  routers:
+    professorit-orca:
+      rule: "Host(`agent.professorit.ru`) && !PathPrefix(`/hooks/chatwoot-avito/`) && !PathPrefix(`/hooks/chatwoot-sales/`) && !PathPrefix(`/hooks/avito/`)"
+      priority: 1000
+      entryPoints: [websecure]
+      service: professorit-orca
+      middlewares: [professorit-orca-headers]
+      tls:
+        certResolver: letsencrypt
+      observability:
+        accessLogs: false
+  services:
+    professorit-orca:
+      loadBalancer:
+        servers:
+          - url: "http://host.docker.internal:3088"
+  middlewares:
+    professorit-orca-headers:
+      headers:
+        contentTypeNosniff: true
+        frameDeny: true
+        stsSeconds: 31536000
+        referrerPolicy: no-referrer

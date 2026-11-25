@@ -1,0 +1,16 @@
+[Unit]
+Description=Private TCP route from HTTPS edge to Orca
+After=network-online.target docker.service professorit-orca-native.service
+Wants=network-online.target professorit-orca-native.service
+
+[Service]
+Type=simple
+DynamicUser=yes
+User=orca-edge
+ExecStart=/usr/bin/socat TCP-LISTEN:3088,bind=172.17.0.1,reuseaddr,fork TCP:127.0.0.1:3040
+Restart=on-failure
+RestartSec=3
+KillMode=control-group
+
+[Install]
+WantedBy=multi-user.target

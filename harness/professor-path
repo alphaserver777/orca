@@ -1,0 +1,10 @@
+#!/usr/bin/python3
+import sys
+p=sys.argv[1]
+if p in ['/root/professor_ot/bin/professor-kb','/opt/professorit/bin/professor-kb']:
+ print('/opt/professorit/orca/bin/professor-kb');raise SystemExit(0)
+for old,new in [('/root/professor_ot/agent/projects/','/opt/professorit/agent/projects/'),('/root/professor_ot/derived/work/','/opt/professorit/derived/work/'),('/root/professor_ot/bin/','/opt/professorit/bin/')]:
+ if p.startswith(old):print(new+p[len(old):]);break
+else:
+ if p.startswith('/root/'):raise SystemExit('No portable mapping for this protected path')
+ print(p)

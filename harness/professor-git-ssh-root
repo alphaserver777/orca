@@ -1,0 +1,20 @@
+#!/usr/bin/python3 -I
+"""SSH transport only for the repository allowlist; no forwarding or arbitrary command."""
+import json,os,shlex,subprocess,sys
+try:
+ args=sys.argv[1:]
+ if len(args)!=2:raise ValueError('Expected host and Git command')
+ host=args[0].removeprefix('git@');parts=shlex.split(args[1])
+ if len(parts)!=2 or parts[0] not in {'git-upload-pack','git-receive-pack'}:raise ValueError('Only Git transport is allowed')
+ path=parts[1].lstrip('/').removesuffix('.git')
+ if any(x in path.split('/') for x in ['.','..','']):raise ValueError('Invalid repository')
+ allow=json.load(open('/opt/professorit/orca/private/git-allowlist.json'))
+ if host+'/'+path not in allow:raise ValueError('Repository is outside the allowlist')
+ target='ssh.github.com' if host=='github.com' else host
+ port='443' if host=='github.com' else '22'
+ known='/root/professor_ot/private/orca-pilot/github-443-known-hosts' if host=='github.com' else '/root/.ssh/known_hosts'
+ env={'PATH':'/usr/bin:/bin','HOME':'/root','LANG':'C.UTF-8','SSH_AUTH_SOCK':'/root/professor_ot/private/ssh-agent/agent.sock'}
+ command=['/usr/bin/ssh','-T','-o','BatchMode=yes','-o','StrictHostKeyChecking=yes','-o','ConnectTimeout=10','-o','UserKnownHostsFile='+known,'-p',port,'git@'+target,parts[0]+' '+shlex.quote(path+'.git')]
+ raise SystemExit(subprocess.call(command,env=env))
+except (ValueError,KeyError) as e:
+ print('Git SSH request refused: '+str(e),file=sys.stderr);raise SystemExit(2)

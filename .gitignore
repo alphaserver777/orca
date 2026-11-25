@@ -7,3 +7,4 @@ auth.json
 *.key
 *.sqlite*
 *.db*
+/.migration/

@@ -1,0 +1,8 @@
+#!/usr/bin/python3
+import os,subprocess,sys
+args=sys.argv[1:]
+# Git may request protocol negotiation, not caller-selected SSH settings.
+if args[:2]==['-o','SendEnv=GIT_PROTOCOL']:args=args[2:]
+if len(args)!=2:
+ print('Unsupported Git SSH arguments',file=sys.stderr);raise SystemExit(2)
+raise SystemExit(subprocess.call(['/usr/bin/sudo','-n','/opt/professorit/orca/bin/professor-git-ssh-root']+args))

@@ -19,10 +19,21 @@
     "migration_python_syntax_valid": true,
     "smoke_worktree_clean": true
   },
-  "command_access": "Full access selected explicitly by owner; ordinary Linux user permissions, no Codex command sandbox or systemd filesystem restrictions.",
-  "git_access": "Public HTTPS fetch; SSH pushes by administrator. No administrator private key copied to agents.",
+  "command_access": "Owner-authorized full sudo without password and Docker access; Codex sandbox and service privilege restrictions disabled.",
+  "git_access": "SSH transport through administrator agent for known repositories; private GitLab read verified; private keys not copied into agent profile.",
   "limits": [
     "Phone connection not configured.",
-    "Full VibeForge/PurpleFlow workflow stages not configured."
-  ]
+    "Full VibeForge/PurpleFlow workflow stages not configured.",
+    "DSH-specific media integrations and planning-with-files hooks still require separate adaptation."
+  ],
+  "harness_migration": {
+    "physical_root": "/opt/professorit",
+    "working_copies": 97,
+    "skills": 37,
+    "canonical_projects_registered": 10,
+    "all_skill_metadata_valid": true,
+    "native_agent_privileges_and_skill_probe": "passed",
+    "bookstack_map_and_guarded_edit": "passed",
+    "private_git_read": "passed"
+  }
 }

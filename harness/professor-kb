@@ -1,0 +1,37 @@
+#!/usr/bin/python3
+"""User-side CLI. All input/output files are opened with the caller's permissions."""
+import json,os,subprocess,sys
+from pathlib import Path
+args=sys.argv[1:];packet={};output=None;fmt='text'
+def remove_option(name):
+ global args
+ for i,x in enumerate(args):
+  if x==name:
+   value=args[i+1];args=args[:i]+args[i+2:];return value
+  if x.startswith(name+'='):
+   value=x.split('=',1)[1];args=args[:i]+args[i+1:];return value
+ return None
+try:
+ if not args:raise ValueError('Command required')
+ if args[0] in {'edit','create'}:
+  file=remove_option('--file')
+  if file is None:raise ValueError('--file required')
+  packet['content']=Path(file).read_text()
+ if args[0]=='read':
+  output=remove_option('--output')
+  for i,x in enumerate(args):
+   if x=='--format':fmt=args[i+1]
+   elif x.startswith('--format='):fmt=x.split('=',1)[1]
+  if output:
+   remove_option('--limit');remove_option('--offset');args+=['--limit','2147483647','--offset','0']
+ if args[0]=='locate':args=[x.replace('/opt/professorit/agent/projects/','/root/professor_ot/agent/projects/').replace('/opt/professorit/projects/','/root/professor_ot/agent/projects/') for x in args]
+ packet['args']=args
+ r=subprocess.run(['/usr/bin/sudo','-n','/opt/professorit/orca/bin/professor-kb-root'],input=json.dumps(packet,ensure_ascii=False).encode(),capture_output=True)
+ if r.returncode:
+  sys.stdout.buffer.write(r.stdout);sys.stderr.buffer.write(r.stderr);raise SystemExit(r.returncode)
+ if output:
+  data=json.loads(r.stdout);p=Path(output);p.write_text(json.dumps(data,ensure_ascii=False,indent=2) if fmt=='json' else data['content']);p.chmod(0o600)
+  print(json.dumps({'saved':str(p),'revision':data['revision'],'html_sha256':data['html_sha256'],'url':data['url']},ensure_ascii=False,indent=2))
+ else:sys.stdout.buffer.write(r.stdout)
+except (ValueError,IndexError,OSError) as e:
+ print(str(e),file=sys.stderr);raise SystemExit(2)

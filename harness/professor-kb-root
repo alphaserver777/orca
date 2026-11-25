@@ -1,0 +1,23 @@
+#!/usr/bin/python3 -I
+"""Restricted BookStack bridge; callers never choose credential or root file paths."""
+import json,os,subprocess,sys,tempfile
+from pathlib import Path
+LIMIT=32*1024*1024
+try:
+ raw=sys.stdin.buffer.read(LIMIT+1)
+ if len(raw)>LIMIT:raise ValueError('Request too large')
+ packet=json.loads(raw);args=packet['args']
+ if not isinstance(args,list) or not args or any(not isinstance(x,str) for x in args):raise ValueError('Invalid arguments')
+ if args[0] not in {'map','search','locate','read','facts','status','edit','create','sync'}:raise ValueError('Unsupported command')
+ if any(x.split('=',1)[0] in {'--config','--output','--file'} for x in args):raise ValueError('Privileged paths cannot be supplied')
+ env={'PATH':'/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin','HOME':'/opt/professorit/orca/private/bookstack','LANG':'C.UTF-8','BOOKSTACK_KB_CONFIG':'/opt/professorit/orca/private/bookstack/config.json','PYTHONDONTWRITEBYTECODE':'1'}
+ command=['/opt/professorit/orca/runtime/python/bin/python','-I','/opt/professorit/orca/tools/bookstack/kb.py']
+ with tempfile.TemporaryDirectory(prefix='request-',dir='/opt/professorit/orca/private/bookstack') as directory:
+  if args[0] in {'edit','create'}:
+   if not isinstance(packet.get('content'),str):raise ValueError('Missing document content')
+   p=Path(directory)/'input';p.write_text(packet['content']);p.chmod(0o600);args=args+['--file',str(p)]
+  elif 'content' in packet:raise ValueError('Unexpected document content')
+  result=subprocess.run(command+args,env=env,cwd=directory,capture_output=True)
+  sys.stdout.buffer.write(result.stdout);sys.stderr.buffer.write(result.stderr);raise SystemExit(result.returncode)
+except (ValueError,KeyError,TypeError) as e:
+ print('Invalid BookStack request: '+str(e),file=sys.stderr);raise SystemExit(2)

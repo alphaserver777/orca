@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /opt/orca/runtime/orca-1.4.274/bin/orca-ide "$@"

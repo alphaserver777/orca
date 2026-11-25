@@ -1,0 +1,9 @@
+/runtime/
+/data/
+*.log
+__pycache__/
+.env
+auth.json
+*.key
+*.sqlite*
+*.db*

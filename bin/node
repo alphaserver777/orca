@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /opt/orca/runtime/orca-1.4.274/runtimes/node-e32e2d16081cf644f88392934288086e7662529d0d43277c34f7aad2207cfafb/bin/node "$@"

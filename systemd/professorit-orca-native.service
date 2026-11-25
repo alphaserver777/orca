@@ -1,0 +1,37 @@
+[Unit]
+Description=Orca and Codex native service
+After=network.target
+Conflicts=professorit-orca-pilot.service
+
+[Service]
+Type=simple
+User=orca
+Group=orca
+WorkingDirectory=/workspace
+Environment=HOME=/home/node
+Environment=ORCA_USER_DATA_PATH=/home/node/.config/orca-pilot
+Environment=ORCA_TELEMETRY_DISABLED=1
+Environment=DO_NOT_TRACK=1
+Environment=ORCA_BACKGROUND_LAUNCH=1
+Environment=LANG=C.UTF-8
+Environment=LC_ALL=C.UTF-8
+Environment=PATH=/opt/orca/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ExecStart=/opt/orca/bin/orca-ide serve --port 3040 --bind 127.0.0.1 --pairing-address http://localhost:3040 --refuse-public --project-root /workspace
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+KillMode=control-group
+UMask=0077
+NoNewPrivileges=yes
+CapabilityBoundingSet=
+ProtectSystem=strict
+ReadWritePaths=/home/node /workspace /opt/orca/.git
+PrivateTmp=yes
+CPUQuota=300%
+MemoryMax=4G
+TasksMax=1024
+StandardOutput=append:/home/node/.local/state/orca/server.log
+StandardError=append:/home/node/.local/state/orca/server.log
+
+[Install]
+WantedBy=multi-user.target

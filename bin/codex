@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /opt/orca/bin/node /opt/orca/runtime/codex-0.172.0/node_modules/@openai/codex/bin/codex.js "$@"

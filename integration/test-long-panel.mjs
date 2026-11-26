@@ -12,7 +12,9 @@ try{
  await page.goto('http://127.0.0.1:'+instance.port+'/web-index.html',{waitUntil:'domcontentloaded'});
  await page.locator('[data-worktree-title-inline-rename]:visible').filter({hasText:'card-a'}).first().click();
  await page.getByRole('button',{name:'Таймлайн',exact:true}).click();
- await page.getByRole('combobox',{name:'Связанный запуск и задача',exact:true}).selectOption({label:'Реализация A (run_fixture_shared)'});
+ await page.locator('.tl-picker>summary').click();
+ await page.locator('.tl-task').filter({hasText:'Реализация A'}).click();
+ await page.getByTitle('Открыть детали «Утверждение плана»',{exact:true}).click();
  await page.locator('.tl-plan-text').filter({hasText:'Синтетический длинный план'}).waitFor();
  for(const width of [1440,960]){
    await page.setViewportSize({width,height:1000});
@@ -23,7 +25,7 @@ try{
    await page.getByRole('textbox',{name:'Комментарий к редакции'}).fill('Черновик проверки длинного плана');
    const commentRect=await page.getByRole('textbox',{name:'Комментарий к редакции'}).boundingBox();
    assert.ok(commentRect.y+commentRect.height<=1000);
-   if(width===960)await page.getByRole('button',{name:'Этапы',exact:true}).click();
+   if(width===960)await page.getByRole('button',{name:'К графику',exact:true}).click();
    const scale=await page.locator('.gantt-axis span').evaluateAll(nodes=>nodes.map(n=>({text:n.textContent,x:n.getBoundingClientRect().x,right:n.getBoundingClientRect().right,height:n.getBoundingClientRect().height})));
    assert.match(scale.at(-1).text,/ч/);for(let i=1;i<scale.length;i++)assert.ok(scale[i].x>scale[i-1].right);
    assert.equal(await page.locator('.gantt-row').filter({hasText:'Приёмка'}).locator('.g-wait-live').count(),0);

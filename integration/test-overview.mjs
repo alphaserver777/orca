@@ -47,9 +47,9 @@ try{
   const choiceKey=selectionKey({id:parent.id,instanceId:parent.instanceId,environmentId:'local'},null,'workspace-task');
   await page.evaluate(key=>sessionStorage.removeItem(key),choiceKey);
   await toggle().click();const panel=page.locator('#orca-timeline-panel');
-  await panel.getByRole('heading',{name:'Задачи пространства',exact:true}).waitFor();await panel.locator('.tl-task').nth(2).waitFor();
+  await panel.getByRole('heading',{name:'Задачи пространства',exact:true}).waitFor();await panel.locator('.tl-task').nth(2).waitFor({state:'attached'});
   assert.equal(await panel.locator('.tl-task').count(),3,'Review tree is grouped; unrelated same-Run task is absent');
-  assert.match(await panel.locator('.tl-task').first().innerText(),/первая задача/);
+  assert.match(await panel.locator('.tl-task').first().textContent(),/первая задача/);
   assert.match(await panel.locator('[data-task-title]').innerText(),/первая задача/);
   assert.equal(await page.evaluate(key=>sessionStorage.getItem(key),choiceKey),null,'An automatic default is not a deliberate selection');report.automaticDefault=true;
   assert.equal(await page.evaluate(()=>window.__overviewEditor===document.querySelector('[contenteditable=true]')),true);
@@ -59,7 +59,7 @@ try{
   assert.equal(await panel.getByRole('button',{name:/Попытка/}).count(),2);
   assert.match(await panel.locator('.gantt-row.is-current').innerText(),/Утверждение плана/);
   report.reviewAttempts=true;
-  const choose=async text=>{await panel.locator('.tl-task').filter({hasText:text}).click();await page.waitForFunction(t=>document.querySelector('[data-task-title]')?.textContent===t,text);};
+  const choose=async text=>{await panel.locator('.tl-picker>summary').click();await panel.locator('.tl-task').filter({hasText:text}).click();await page.waitForFunction(t=>document.querySelector('[data-task-title]')?.textContent===t,text);};
   await choose('ТЕСТ: другой Run');await panel.locator('[data-decision-boundary]').filter({hasText:'недоступно'}).waitFor();
   assert.equal(await panel.getByRole('button',{name:'Принять план',exact:true}).count(),0);report.acceptanceBoundary=true;
   await choose('ТЕСТ: соседняя задача того же Run');
@@ -113,7 +113,7 @@ try{
   rpc('files.write',{worktree:'id:'+added.id,expectedExecutionHostId:'local',relativePath:'.orca-task-timeline.json',content:JSON.stringify({schema:1,workspace:{id:added.id,instanceId:added.instanceId},links:[{runId:'run_overview',taskId:'task_unrelated'}]})});
   const eventReply=await call({workspaceId:added.id,instanceId:added.instanceId,run:'run_overview',task:'task_unrelated',gate:'gate_overview_event',revision:1,decision:'accept',comment:'ТЕСТ: штатное событие новой задачи'});
   assert.equal(eventReply.ok,true,JSON.stringify(eventReply));
-  await panel.locator('.tl-task').nth(3).waitFor();assert.equal(await panel.locator('.tl-task').count(),4);
+  await panel.locator('.tl-task').nth(3).waitFor({state:'attached'});assert.equal(await panel.locator('.tl-task').count(),4);
   assert.match(await panel.locator('[data-task-title]').innerText(),/первая задача/);report.newTaskEvent=true;
   await card('overview-empty').click();await toggle().click();await panel.getByText('У этого пространства пока нет связанной задачи.',{exact:true}).waitFor();
   await card('overview-one').click();await toggle().click();await panel.locator('.gantt-row').first().waitFor();

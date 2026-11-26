@@ -35,9 +35,10 @@ export function mountAttemptDetails(container, call, stage, options={}) {
     const a=value.attempt;
     body.append(node('p',`Состояние этапа: ${currentStage.attempts.some(a=>a.running) ? 'есть открытое поручение или ожидание решения' : currentStage.attempts.length ? 'нет открытых попыток' : 'нет данных'}`));
     if(!a){body.append(node('p','У этапа нет записанных попыток.'));return;}
-    body.append(node('p',`${a.label} · ${state(a.status)} · ${a.duration}`),
+    const waitingForPerson=a.source==='Gate'&&['pending','open'].includes(a.status);
+    body.append(node('p',`${a.label} · ${waitingForPerson?'ожидает решения':state(a.status)} · ${a.duration}`),
       node('p',`Начало: ${moment(a.start)}`),
-      node('p',`Окончание: ${a.running ? 'Поручение ещё открыто' : moment(a.end)}`),
+      node('p',`Окончание: ${a.running ? a.source==='Gate'?'Решение ещё не принято':'Поручение ещё открыто' : moment(a.end)}`),
       node('p',`Задача: ${a.label} · ${a.taskId ?? 'Нет данных'}`),
       node('p',`ID: ${a.dispatchId ?? a.gateId ?? a.id}`));
     const concurrent=(options.relatedAttempts??[]).filter(other=>other.id!==a.id

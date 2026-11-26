@@ -86,7 +86,8 @@ test('native composer → plan return → revision → one implementation; Purpl
     await form.getByRole('button',{name:'Запустить',exact:true}).dblclick();
     const panel=page.getByRole('complementary',{name:'Таймлайн задачи'}),decision=panel.getByRole('region',{name:'Согласование плана'});
     await panel.waitFor({timeout:60000});await form.waitFor({state:'detached'});
-    await decision.getByText('Ждёт вашего решения',{exact:true}).waitFor({timeout:30000});
+    await panel.getByTitle('Открыть детали «Утверждение плана»',{exact:true}).click();
+    await decision.getByText('Ждёт вашего решения',{exact:true}).waitFor({timeout:30000});console.log('PASS phase pending-v1');
     await decision.getByRole('heading',{name:'Редакция 1',exact:true}).waitFor();
     const result=JSON.parse(await readFile(path.join(root,'coordinator-result.json'),'utf8'));
     assert.equal(result.coordinatorSessionId,sessionId);
@@ -120,12 +121,12 @@ test('native composer → plan return → revision → one implementation; Purpl
     await decision.getByRole('button',{name:'Вернуть с комментарием'}).click();
     const comment=decision.getByRole('textbox',{name:'Комментарий к редакции'});
     await comment.fill('Добавить проверку восстановления после reload');
-    await page.reload({waitUntil:'domcontentloaded'});await page.getByText('ТЕСТ: чат задачи',{exact:true}).last().click();await page.getByRole('button',{name:'Таймлайн',exact:true}).click();
-    await comment.waitFor();assert.equal(await comment.inputValue(),'Добавить проверку восстановления после reload');
+    await page.reload({waitUntil:'domcontentloaded'});await page.locator('[data-worktree-title-inline-rename]:visible').filter({hasText:path.basename(result.workspaceId.split('::')[1])}).first().click();await page.getByText('ТЕСТ: чат задачи',{exact:true}).last().click();await page.getByRole('button',{name:'Таймлайн',exact:true}).click();await panel.getByTitle('Открыть детали «Утверждение плана»',{exact:true}).click();
+    await comment.waitFor();console.log('PASS phase draft-reload');assert.equal(await comment.inputValue(),'Добавить проверку восстановления после reload');
     assert.equal(await targetDraft.innerText(),'ТЕСТ: черновик в пространстве задачи');
     // Keyboard from the comment follows upstream GateBar: Ctrl+Enter returns with comment.
     await comment.focus();await page.keyboard.press('Control+Enter');
-    await decision.getByText('План возвращён. Ожидается новая редакция.',{exact:true}).waitFor();
+    await decision.getByText('План возвращён. Ожидается новая редакция.',{exact:true}).waitFor();console.log('PASS phase returned-v1');
     await page.getByRole('button',{name:'Таймлайн',exact:true}).locator('[data-pending-decision]').waitFor({state:'detached'});
     assert.equal((await task()).status,'blocked');assert.equal(await exists('implementation-start.json'),false);
     const old=await call('workflowPlan.read',params);assert.equal(old.result.current.answer.decision,'return');
@@ -136,7 +137,7 @@ test('native composer → plan return → revision → one implementation; Purpl
     }
     // Deterministic coordinator consumes the native answer; only its timing is released by the test.
     await advance('fixture: next revision');
-    await decision.getByRole('heading',{name:'Редакция 2',exact:true}).waitFor({timeout:45000});
+    await decision.getByRole('heading',{name:'Редакция 2',exact:true}).waitFor({timeout:45000});console.log('PASS phase pending-v2');
     await page.getByRole('button',{name:'Таймлайн',exact:true}).locator('[data-pending-decision]').waitFor();
     assert.match(await decision.locator('.tl-plan-text').innerText(),/Учтён комментарий: Добавить проверку восстановления после reload/);
     assert.equal((await task()).status,'blocked');assert.equal(await exists('implementation-start.json'),false);
@@ -146,7 +147,7 @@ test('native composer → plan return → revision → one implementation; Purpl
     assert.match(await decision.innerText(),/Комментарий: Добавить проверку восстановления/);
     assert.equal(await decision.getByRole('button',{name:'Принять план'}).count(),0);
     // Historical revision selection survives a real remount/reload; it grants no action.
-    await page.reload({waitUntil:'domcontentloaded'});await page.getByText('ТЕСТ: чат задачи',{exact:true}).last().click();await page.getByRole('button',{name:'Таймлайн',exact:true}).click();
+    await page.reload({waitUntil:'domcontentloaded'});await page.locator('[data-worktree-title-inline-rename]:visible').filter({hasText:path.basename(result.workspaceId.split('::')[1])}).first().click();await page.getByText('ТЕСТ: чат задачи',{exact:true}).last().click();await page.getByRole('button',{name:'Таймлайн',exact:true}).click();await panel.getByTitle('Открыть детали «Утверждение плана»',{exact:true}).click();
     await decision.getByRole('heading',{name:'Редакция 1',exact:true}).waitFor();
     assert.equal(await decision.getByRole('button',{name:'Принять план'}).count(),0);
     assert.equal(await decision.getByRole('button',{name:'Вернуть с комментарием'}).count(),0);
@@ -165,9 +166,12 @@ test('native composer → plan return → revision → one implementation; Purpl
     await page.screenshot({animations:'disabled',timeout:90000,path:path.join(root,'04-narrow-desktop.png')});
     await page.setViewportSize({width:390,height:844});assert.equal(await panel.isVisible(),false);assert.equal(await page.getByRole('button',{name:'Таймлайн',exact:true}).isVisible(),false);
     await page.setViewportSize({width:1440,height:1050});
+    // Mobile removes the controller; reopening starts with the full graph.
+    await panel.getByTitle('Открыть детали «Утверждение плана»',{exact:true}).click();
     await page.evaluate(()=>{window.__raceInjected=false;window.__raceReplies=[];for(const api of [window.api.runtime,window.api.runtimeEnvironments]){const original=api.call;api.call=async request=>{if(request.method!=='workflowPlan.respond'||window.__raceInjected)return original(request);window.__raceInjected=true;const replies=await Promise.all([original(request),original(request)]);window.__raceReplies=replies.map(r=>({ok:r.ok,code:r.error?.code}));return replies[0];};}});
     await decision.getByRole('button',{name:'Принять план'}).dblclick();
     await decision.getByText('План принят',{exact:true}).first().waitFor();
+    await page.waitForFunction(()=>window.__raceReplies?.length===2);
     const raceReplies=await page.evaluate(()=>window.__raceReplies);assert.equal(raceReplies.filter(r=>r.ok).length,1);assert.equal(raceReplies.filter(r=>!r.ok).length,1);
     const statusAfterAcceptance=(await task()).status;
     const accepted=await call('workflowPlan.read',params),current=accepted.result.current;
@@ -178,7 +182,7 @@ test('native composer → plan return → revision → one implementation; Purpl
     await advance('fixture: consume current decision');
     const marker=await waitForMarker();assert.equal((await task()).status,'ready');
     await advance('fixture: repeated wake');
-    await page.reload({waitUntil:'domcontentloaded'});await page.getByText('ТЕСТ: чат задачи',{exact:true}).last().click();await page.getByRole('button',{name:'Таймлайн',exact:true}).click();
+    await page.reload({waitUntil:'domcontentloaded'});await page.locator('[data-worktree-title-inline-rename]:visible').filter({hasText:path.basename(result.workspaceId.split('::')[1])}).first().click();await page.getByText('ТЕСТ: чат задачи',{exact:true}).last().click();await page.getByRole('button',{name:'Таймлайн',exact:true}).click();await panel.getByTitle('Открыть детали «Утверждение плана»',{exact:true}).click();
     await decision.getByText('План принят',{exact:true}).first().waitFor();
     assert.equal(await targetDraft.innerText(),'ТЕСТ: черновик в пространстве задачи');
     assert.equal(marker.count,1);assert.equal(marker.revision,2);assert.equal(marker.nativeDispatch,false);

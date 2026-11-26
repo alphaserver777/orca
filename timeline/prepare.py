@@ -7,6 +7,8 @@ from pathlib import Path
 
 TASK = 'assets/App-CTRL5owY.js'
 PREVIOUS_OVERLAYS = {
+    'a62dd0b30a566d967adc9b221f805d1cf0dc138e2b4bb42ca3be1db23cdc716d',  # Exact combined e5ee5fc release; archive-built upgrade/rollback regression
+    '0d4bb14bd54d22728580c94e69078339da44ddf9af746a3bc8945bdb95bbbf5b',  # Full chart / conditional drawer, verified standalone upgrade input
     '39d4eb600e4677c424a858fa601218bb13e22120c5af325a2845bbf03b434a86',  # Standalone workspace overview before composer installation
     '3dab5a7abd0bab44ecd4023bd1a7640f4d932a823ce3f93e084a19beb77a90b2',  # Verified combined native sidebar, base 0c76193
     'c28209ae3c766b87e2ac5da389b959b578df3125ddb0a7ec0edc560e7bb90fc7',  # Final native sidebar, bounded native drag and Escape focus

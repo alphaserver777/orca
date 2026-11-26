@@ -17,12 +17,12 @@ export function PlanStageDrawer({entry,entries,pending,drafts,children,selectedG
   </div>;
 }
 
-export function mountPurpleflowTimeline(container:any,model:any,rows:any,onSelect:any,selected:any="approval") {
+export function mountPurpleflowTimeline(container:any,model:any,rows:any,onSelect:any,selected:any=null) {
   const root=createRoot(container);
   const draw=(model:any,rows:any,onSelect:any,nextSelected:any=selected)=>{
     selected=nextSelected;
     const run={model,rows,status:rows.some((r:any)=>r.attempts.some((a:any)=>a.running))?'waiting':'stopped',next:rows.find((r:any)=>r.attempts.some((a:any)=>a.running))?.id};
-    root.render(<Timeline run={run} current={model.currentStage??run.next} selected={selected} compact={true} onSelect={onSelect}/>);
+    root.render(<Timeline run={run} current={model.currentStage??run.next} selected={selected} compact={selected!==null} onSelect={onSelect}/>);
   };
   draw(model,rows,onSelect);
   const stop:any=()=>root.unmount();stop.update=draw;return stop;

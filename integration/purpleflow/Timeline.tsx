@@ -28,7 +28,8 @@ export function useNow(run: RunFile): number {
 
 /** Большой гант: строка на стадию, полоска на попытку; ожидание человека — штриховкой. */
 const WORD: Record<string, string> = {
-  idle: 'впереди',
+  idle: 'нет данных',
+  unknown: 'нет данных о результате',
   active: 'работает',
   waiting: 'ждёт вас',
   done: 'готово',
@@ -60,7 +61,7 @@ export function Timeline({
   const axis=useRef<HTMLDivElement>(null),[axisWidth,setAxisWidth]=useState(0);
   useEffect(()=>{const node=axis.current;if(!node)return;const observer=new ResizeObserver(()=>setAxisWidth(node.clientWidth));observer.observe(node);return ()=>observer.disconnect();},[]);
   const divisions=axisWidth>=300?4:axisWidth>=180?2:1;
-  const ticks = Array.from({length:divisions+1},(_,i)=>i/divisions);
+  const ticks = run.model.hasHistory ? Array.from({length:divisions+1},(_,i)=>i/divisions) : [];
   const plan = plannedRoute(run);
   // Шаги маршрута — лесенкой справа от «сейчас»: реальная шкала сжимается, освобождая место под них.
   const steps = runStages(run)
@@ -72,6 +73,7 @@ export function Timeline({
 
   return (
     <div className={`gantt is-large ${compact ? 'is-compact' : ''}`} aria-label="Время по стадиям">
+      <div className="gantt-rows">
       <div className="gantt-grid" aria-hidden>
         {ticks.map((f) => (
           <i key={f} style={{ left: at(f * 100) }} />
@@ -92,11 +94,12 @@ export function Timeline({
         const bars = stageBars(run, clock, st.id, now, 0.4);
         const state = nodeState(run, st.id);
         const planned = plan[st.id];
-        const reachable = bars.length > 0 || st.id === run.next;
+        const reachable = run.rows.find((r:any)=>r.id===st.id)?.attempts.length > 0;
         const tries = bars.filter((b) => !b.attempt.stage.startsWith('gate') && b.attempt.stage !== 'limit').length;
         return (
           <button
             key={st.id}
+            data-stage={st.id}
             aria-current={current === st.id ? "step" : undefined}
             aria-pressed={selected === st.id}
             className={`gantt-row is-click st-${state} ${planned ? `is-${planned}` : ''} ${selected === st.id ? 'is-selected' : ''} ${current === st.id ? 'is-current' : ''}`}
@@ -106,8 +109,8 @@ export function Timeline({
           >
             <span className="gantt-label">
               <span className={`gantt-node ${st.gate ? 'is-gate-node' : ''}`}>
-                {/* Идёт работа — вместо иконки крутится кружок внутри узла. */}
-                {state === 'active' ? <span className="node-spin" /> : STAGE_ICON[st.id]}
+                {/* Orca keeps the stage identifiable while its dispatch is open. */}
+                {STAGE_ICON[st.id]}
               </span>
               <span className="gantt-name">
                 <span>
@@ -130,9 +133,9 @@ export function Timeline({
               )}
               {bars.map((b, i) => {
                 const full = `${bars.length > 1 ? `#${b.attempt.attempt} · ` : ''}${b.took}`;
-                // Ожидание человека — фиксированный слот без времени (точное время — в подсказке).
+                // Orca intervals stay on one wall-clock axis, including human waits.
                 const label =
-                  compact || b.kind === 'wait' || b.kind === 'wait-live'
+                  compact
                     ? ''
                     : fits(b.width, full,axisWidth)
                       ? full
@@ -153,9 +156,11 @@ export function Timeline({
           </button>
         );
       })}
+      </div>
       <div ref={axis} className="gantt-axis" style={reserve ? { marginRight: reserve } : undefined}>
+        {!ticks.length&&<span>Нет данных о времени</span>}
         {ticks.map((f) => (
-          <span key={f}>{f === 0 ? '0' : ms(span * f)}</span>
+          <span key={f} style={{left:`${f*100}%`}}>{f === 0 ? '0' : ms(span * f)}</span>
         ))}
       </div>
       <ul className="gantt-legend">

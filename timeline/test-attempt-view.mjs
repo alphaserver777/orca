@@ -41,3 +41,13 @@ test('drawer navigates attempts, clears old output while loading and restores ex
     assert.equal(container.textContent,'');
   } finally {globalThis.document=previous;}
 });
+test('pending human gate stays read-only and says waiting for a decision, not a dispatch launch',async()=>{
+  const previous=globalThis.document;globalThis.document={createElement:()=>new Element};
+  try{
+    const container=new Element;let calls=0;
+    const drawer=mountAttemptDetails(container,()=>{calls++;throw Error('A gate must not read a worker');},{id:'acceptance',label:'Приёмка',attempts:[{id:'g',gateId:'g',runId:'r',taskId:'t',source:'Gate',label:'Принимаете результат?',status:'pending',start:0,end:1000,running:true,duration:'1 с'}]});
+    await new Promise(resolve=>setImmediate(resolve));
+    assert.match(container.textContent,/ожидает решения/);assert.match(container.textContent,/Решение ещё не принято/);
+    assert.doesNotMatch(container.textContent,/ожидает запуска|Поручение ещё открыто/);assert.equal(calls,0);drawer.dispose();
+  }finally{globalThis.document=previous;}
+});

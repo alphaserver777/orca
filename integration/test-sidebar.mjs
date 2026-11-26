@@ -22,6 +22,7 @@ try{
  const open=async()=>{await toggle().click();await page.locator('.gantt-row').first().waitFor();await page.getByTitle('Открыть детали «Утверждение плана»',{exact:true}).click();};
  await open();
  await page.locator('#orca-timeline-panel').press('Escape');
+ await page.locator('#orca-timeline-panel').press('Escape');
  await page.locator('#orca-timeline-panel').waitFor({state:'detached'});
  assert.equal(await toggle().evaluate(n=>n===document.activeElement),true);
  await page.keyboard.press('Enter');await page.locator('.gantt-row').first().waitFor();
@@ -60,9 +61,11 @@ try{
    });
    assert.ok(geometry.chat.right<=geometry.panel.x+1);assert.ok(geometry.chat.width>180);
    for(const item of geometry.items)assert.ok(item.scroll<=item.width+1,JSON.stringify(item));
-   if(width>=1280)assert.notEqual(geometry.stages,'none');
+   if(geometry.panel.width>=700)assert.notEqual(geometry.stages,'none');
    else{
-     await page.getByRole('button',{name:'Этапы',exact:true}).click();await page.locator('.tl-stages').waitFor();
+     const back=page.getByRole('button',{name:'К графику',exact:true});
+     if(await back.isVisible())await back.click();
+     await page.locator('.tl-stages').waitFor();
      await page.getByTitle('Открыть детали «Утверждение плана»',{exact:true}).click();
      await page.getByRole('button',{name:'Редакция 1',exact:true}).focus();await page.keyboard.press('Enter');
      await page.getByRole('heading',{name:'Редакция 1',exact:true}).waitFor();

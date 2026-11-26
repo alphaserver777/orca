@@ -32,17 +32,17 @@ try{
  const sent=await page.evaluate(params=>window.api.runtime.call({method:'agentSession.send',params}),message);assert.equal(sent.ok,true);
  await page.getByText(/ТЕСТОВЫЙ КОНТЕКСТ 65\./).waitFor();
  const editor=page.locator('[contenteditable=true]').first();await editor.fill('ТЕСТ: черновик и длинный чат сохраняются');
- await page.getByRole('button',{name:'Таймлайн',exact:true}).click();const panel=page.locator('#orca-timeline-panel');await panel.locator('.tl-task').nth(3).waitFor();
+ await page.getByRole('button',{name:'Таймлайн',exact:true}).click();const panel=page.locator('#orca-timeline-panel');await panel.locator('.tl-task').nth(3).waitFor({state:'attached'});
  const scroll=await page.evaluate(()=>{
    const left=document.querySelector('#orca-timeline-panel').getBoundingClientRect().left;
    const node=[...document.querySelectorAll('*')].find(n=>{const r=n.getBoundingClientRect();return r.x>=320&&r.right<=left+1&&r.height>100&&n.scrollHeight>n.clientHeight+100&&/auto|scroll/.test(getComputedStyle(n).overflowY)});
    if(!node)return null;node.scrollTop=Math.floor((node.scrollHeight-node.clientHeight)/2);window.__overviewScroll={node,top:node.scrollTop,editor:document.querySelector('[contenteditable=true]')};return {top:node.scrollTop,range:node.scrollHeight-node.clientHeight};
  });assert.ok(scroll?.top>0);
- await panel.locator('.tl-task').filter({hasText:'ТЕСТ: соседняя задача того же Run'}).click();
+ await panel.locator('.tl-picker>summary').click();await panel.locator('.tl-task').filter({hasText:'ТЕСТ: соседняя задача того же Run'}).click();
  assert.equal(await page.evaluate(()=>window.__overviewScroll.node.isConnected&&window.__overviewScroll.node.scrollTop===window.__overviewScroll.top&&window.__overviewScroll.editor===document.querySelector('[contenteditable=true]')),true);
  assert.equal(await editor.innerText(),'ТЕСТ: черновик и длинный чат сохраняются');
- const button=panel.locator('.tl-task[aria-pressed=true]');assert.equal(await button.evaluate(n=>document.activeElement===n),true);
- await panel.locator('.tl-task').filter({hasText:'ТЕСТ: первая задача'}).click();
+ const button=panel.locator('.tl-picker>summary');assert.equal(await button.evaluate(n=>document.activeElement===n),true);
+ await panel.locator('.tl-picker>summary').click();await panel.locator('.tl-task').filter({hasText:'ТЕСТ: первая задача'}).click();
  await panel.getByTitle('Открыть детали «Ревью»',{exact:true}).click();await panel.getByText('ctx_overview_r2',{exact:false}).waitFor();
  await page.emulateMedia({colorScheme:'dark'});await page.waitForFunction(()=>document.documentElement.classList.contains('dark'));
  await page.screenshot({path:path.join(root,'overview-owner-dark.png'),animations:'disabled'});

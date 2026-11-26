@@ -45,7 +45,22 @@
     "app/src/renderer/src/components/Sidebar.tsx": {
       "source": "app/src/renderer/src/components/Sidebar.tsx",
       "sha256": "8d360d3eacc0860d0ffeab878683252580f8b6a5cce8e8074de11531d5054920",
-      "fragments": "Create menu (133–168): task/chat labels, descriptions and icon layout; adapted to native Orca plus with original worktree action as the third item"
+      "fragments": "Create menu (133\u2013168): task/chat labels, descriptions and icon layout; adapted to native Orca plus with original worktree action as the third item"
+    },
+    "app/src/renderer/src/components/StageRail.tsx": {
+      "source": "app/src/renderer/src/components/StageRail.tsx",
+      "sha256": "c8300024c32a53ab74e0118db9e492f8af5c39088a0f646c4f43976c7db7470a",
+      "fragments": "Stage icon mapping and full timeline / compact drawer composition"
+    },
+    "app/src/renderer/src/screens/Run.tsx": {
+      "source": "app/src/renderer/src/screens/Run.tsx",
+      "sha256": "208c500535a5c6ef3d7a02ab7b329ac42c89e92f0b8715931e3c533730e83377",
+      "fragments": "Stage icon mapping and full timeline / compact drawer composition"
     }
+  },
+  "lucide": {
+    "version": "1.52.0",
+    "license": "ISC",
+    "source": "lucide-react npm package, exact icon nodes; see stage-icons.tsx and lucide-LICENSE"
   }
 }

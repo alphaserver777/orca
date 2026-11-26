@@ -35,10 +35,15 @@ export function GateBar(props: {
   const [open, setOpen] = useState(() => comment !== '');
   // Горячие клавиши: ⌘↵ — принять, ⌘⇧↵ — вернуть, ⌘⌥↵ — поправить (приёмка). В поле комментария к гейту ⌘↵ отправляет его.
   const keys = useRef(props);
+  const visibleBar = useRef<HTMLDivElement>(null);
   keys.current = props;
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== 'Enter' || !(e.metaKey || e.ctrlKey) || e.repeat) return;
+      // Orca keeps the plan controller while the graph or another stage is open.
+      // Its detached/hidden footer must not consume shortcuts from the chart/chat.
+      const bar=visibleBar.current;
+      if(!bar?.isConnected||!bar.getClientRects().length||!bar.closest('.tl-detail')?.contains(document.activeElement))return;
       const p = keys.current;
       if (p.busy) return;
       const el = document.activeElement;
@@ -70,7 +75,7 @@ export function GateBar(props: {
   const title = gate === 'gate1' ? 'Утверждение плана' : gate === 'gate2' ? 'Приёмка' : stuck ? 'Ходят по кругу' : 'Попытки исчерпаны';
   const needsComment = gate !== 'limit';
   return (
-    <div className="gatebar is-gate">
+    <div ref={visibleBar} className="gatebar is-gate">
       <div className="gate-sign" aria-hidden>
         {gate === 'gate2' ? <ClipboardCheck size={17} /> : <UserRoundCheck size={17} />}
       </div>

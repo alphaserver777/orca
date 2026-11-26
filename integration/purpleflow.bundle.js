@@ -20,6 +20,51 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+Lucide React 1.52.0
+ISC License
+
+Copyright (c) 2026 Lucide Icons and Contributors
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+---
+
+The following Lucide icons are derived from the Feather project:
+
+airplay, alert-circle, alert-octagon, alert-triangle, aperture, arrow-down-circle, arrow-down-left, arrow-down-right, arrow-down, arrow-left-circle, arrow-left, arrow-right-circle, arrow-right, arrow-up-circle, arrow-up-left, arrow-up-right, arrow-up, at-sign, calendar, cast, check, chevron-down, chevron-left, chevron-right, chevron-up, chevrons-down, chevrons-left, chevrons-right, chevrons-up, circle, clipboard, clock, code, columns, command, compass, corner-down-left, corner-down-right, corner-left-down, corner-left-up, corner-right-down, corner-right-up, corner-up-left, corner-up-right, crosshair, database, divide-circle, divide-square, dollar-sign, download, external-link, feather, frown, hash, headphones, help-circle, info, italic, key, layout, life-buoy, link-2, link, loader, lock, log-in, log-out, maximize, meh, minimize, minimize-2, minus-circle, minus-square, minus, monitor, moon, more-horizontal, more-vertical, move, music, navigation-2, navigation, octagon, pause-circle, percent, plus-circle, plus-square, plus, power, radio, rss, search, server, share, shopping-bag, sidebar, smartphone, smile, square, table-2, tablet, target, terminal, trash-2, trash, triangle, tv, type, upload, x-circle, x-octagon, x-square, x, zoom-in, zoom-out
+
+The MIT License (MIT) (for the icons listed above)
+
+Copyright (c) 2013-present Cole Bemis
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 var OrcaPurpleflow = (() => {
   var __defProp = Object.defineProperty;
@@ -67,6 +112,18 @@ var OrcaPurpleflow = (() => {
   var Globe = make("M2 12h20 M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20 M12 2c6 6 6 14 0 20-6-6-6-14 0-20");
   var Wrench = make("m14 6 4 4 4-4a7 7 0 0 1-9 9L6 22l-4-4 7-7a7 7 0 0 1 9-9z");
 
+  // integration/purpleflow/stage-icons.tsx
+  var icon = (nodes) => ({ size = 16 }) => react_default.createElement("svg", { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.7, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": true }, ...nodes.map(([tag, attrs]) => react_default.createElement(tag, attrs)));
+  var MessageCircleQuestion2 = icon([["path", { "d": "M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719", "key": "1sd12s" }], ["path", { "d": "M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3", "key": "1u773s" }], ["path", { "d": "M12 17h.01", "key": "p32p05" }]]);
+  var Map = icon([["path", { "d": "M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z", "key": "169xi5" }], ["path", { "d": "M15 5.764v15", "key": "1pn4in" }], ["path", { "d": "M9 3.236v15", "key": "1uimfh" }]]);
+  var UserRoundCheck2 = icon([["path", { "d": "M2 21a8 8 0 0 1 13.292-6", "key": "bjp14o" }], ["circle", { "cx": "10", "cy": "8", "r": "5", "key": "o932ke" }], ["path", { "d": "m16 19 2 2 4-4", "key": "1b14m6" }]]);
+  var Hammer = icon([["path", { "d": "m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9", "key": "1hayfq" }], ["path", { "d": "m18 15 4-4", "key": "16gjal" }], ["path", { "d": "m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5", "key": "15ts47" }]]);
+  var FlaskConical = icon([["path", { "d": "M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2", "key": "18mbvz" }], ["path", { "d": "M6.453 15h11.094", "key": "3shlmq" }], ["path", { "d": "M8.5 2h7", "key": "csnxdl" }]]);
+  var ScanEye = icon([["path", { "d": "M3 7V5a2 2 0 0 1 2-2h2", "key": "aa7l1z" }], ["path", { "d": "M17 3h2a2 2 0 0 1 2 2v2", "key": "4qcy5o" }], ["path", { "d": "M21 17v2a2 2 0 0 1-2 2h-2", "key": "6vwrx8" }], ["path", { "d": "M7 21H5a2 2 0 0 1-2-2v-2", "key": "ioqczr" }], ["circle", { "cx": "12", "cy": "12", "r": "1", "key": "41hilf" }], ["path", { "d": "M18.944 12.33a1 1 0 0 0 0-.66 7.5 7.5 0 0 0-13.888 0 1 1 0 0 0 0 .66 7.5 7.5 0 0 0 13.888 0", "key": "11ak4c" }]]);
+  var ClipboardCheck2 = icon([["rect", { "width": "8", "height": "4", "x": "8", "y": "2", "rx": "1", "ry": "1", "key": "tgr4d6" }], ["path", { "d": "M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2", "key": "116196" }], ["path", { "d": "m9 14 2 2 4-4", "key": "df797q" }]]);
+  var Archive = icon([["rect", { "width": "20", "height": "5", "x": "2", "y": "3", "rx": "1", "key": "1wp1u1" }], ["path", { "d": "M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8", "key": "1s80jp" }], ["path", { "d": "M10 12h4", "key": "a56b0p" }]]);
+  var Globe2 = icon([["circle", { "cx": "12", "cy": "12", "r": "10", "key": "1mglay" }], ["path", { "d": "M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20", "key": "13o1zl" }], ["path", { "d": "M2 12h20", "key": "9i4pu4" }]]);
+
   // integration/purpleflow/native.tsx
   var bridge = { platform: "linux" };
   var ms = (value) => value < 1e3 ? `${Math.floor(value)}\xA0\u043C\u0441` : value < 6e4 ? `${+(value / 1e3).toFixed(1)}\xA0\u0441` : value < 36e5 ? `${+(value / 6e4).toFixed(1)}\xA0\u043C\u0438\u043D` : `${+(value / 36e5).toFixed(1)}\xA0\u0447`;
@@ -76,7 +133,10 @@ var OrcaPurpleflow = (() => {
     const attempts = run.rows.find((r) => r.id === id)?.attempts || [];
     if (attempts.some((a) => a.running && a.source === "Gate")) return "waiting";
     if (attempts.some((a) => a.running)) return "active";
-    return attempts.length ? "done" : "idle";
+    const latest = attempts.at(-1);
+    if (["failed", "circuit_broken"].includes(latest?.status)) return "failed";
+    if (["stopped", "abandoned", "timeout"].includes(latest?.status)) return "stopped";
+    return latest && ["completed", "resolved", "accepted"].includes(latest.status) ? "done" : attempts.length ? "unknown" : "idle";
   };
   var plannedRoute = () => ({});
   var stageBars = (run, clock, id) => {
@@ -87,10 +147,10 @@ var OrcaPurpleflow = (() => {
       left: 100 * (a.start - run.model.start) / span,
       width: 100 * (a.end - a.start) / span,
       took: a.duration,
-      tip: a.source === "Gate" ? `\u0420\u0435\u0448\u0435\u043D\u0438\u0435 \u043F\u043E \u043F\u043B\u0430\u043D\u0443 \xB7 ${a.duration}` : `${a.label} \xB7 ${a.duration}`
+      tip: a.source === "Gate" ? `${id === "approval" ? "\u0423\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043D\u0438\u0435 \u043F\u043B\u0430\u043D\u0430" : id === "acceptance" ? "\u041F\u0440\u0438\u0451\u043C\u043A\u0430" : "\u0420\u0435\u0448\u0435\u043D\u0438\u0435 \u0447\u0435\u043B\u043E\u0432\u0435\u043A\u0430"} \xB7 ${a.duration}` : `${a.label} \xB7 ${a.duration}`
     }));
   };
-  var STAGE_ICON = new Proxy({}, { get: (_, id) => id === "approval" ? "\u25C7" : id === "acceptance" ? "\u2713" : "\xB7" });
+  var STAGE_ICON = { clarify: /* @__PURE__ */ react_default.createElement(MessageCircleQuestion2, { size: 16 }), plan: /* @__PURE__ */ react_default.createElement(Map, { size: 16 }), approval: /* @__PURE__ */ react_default.createElement(UserRoundCheck2, { size: 16 }), implementation: /* @__PURE__ */ react_default.createElement(Hammer, { size: 16 }), checks: /* @__PURE__ */ react_default.createElement(FlaskConical, { size: 16 }), review: /* @__PURE__ */ react_default.createElement(ScanEye, { size: 16 }), acceptance: /* @__PURE__ */ react_default.createElement(ClipboardCheck2, { size: 16 }), commit: /* @__PURE__ */ react_default.createElement(Archive, { size: 16 }), other: /* @__PURE__ */ react_default.createElement(Globe2, { size: 16 }) };
 
   // integration/purpleflow/Timeline.tsx
   var LEGEND = [
@@ -110,7 +170,8 @@ var OrcaPurpleflow = (() => {
     return live ? now : Date.now();
   }
   var WORD = {
-    idle: "\u0432\u043F\u0435\u0440\u0435\u0434\u0438",
+    idle: "\u043D\u0435\u0442 \u0434\u0430\u043D\u043D\u044B\u0445",
+    unknown: "\u043D\u0435\u0442 \u0434\u0430\u043D\u043D\u044B\u0445 \u043E \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u0435",
     active: "\u0440\u0430\u0431\u043E\u0442\u0430\u0435\u0442",
     waiting: "\u0436\u0434\u0451\u0442 \u0432\u0430\u0441",
     done: "\u0433\u043E\u0442\u043E\u0432\u043E",
@@ -138,12 +199,12 @@ var OrcaPurpleflow = (() => {
       return () => observer.disconnect();
     }, []);
     const divisions = axisWidth >= 300 ? 4 : axisWidth >= 180 ? 2 : 1;
-    const ticks = Array.from({ length: divisions + 1 }, (_, i) => i / divisions);
+    const ticks = run.model.hasHistory ? Array.from({ length: divisions + 1 }, (_, i) => i / divisions) : [];
     const plan = plannedRoute(run);
     const steps = runStages(run).map((s) => s.id).filter((id) => plan[id] === "planned");
     const reserve = steps.length ? steps.length * 20 + 8 : 0;
     const at = (pct) => reserve ? `calc((100% - ${reserve}px) * ${pct / 100})` : `${pct}%`;
-    return /* @__PURE__ */ react_default.createElement("div", { className: `gantt is-large ${compact ? "is-compact" : ""}`, "aria-label": "\u0412\u0440\u0435\u043C\u044F \u043F\u043E \u0441\u0442\u0430\u0434\u0438\u044F\u043C" }, /* @__PURE__ */ react_default.createElement("div", { className: "gantt-grid", "aria-hidden": true }, ticks.map((f) => /* @__PURE__ */ react_default.createElement("i", { key: f, style: { left: at(f * 100) } }))), clock.gaps.length > 0 && /* @__PURE__ */ react_default.createElement("div", { className: "gantt-gaps" }, clock.gaps.map((g, i) => /* @__PURE__ */ react_default.createElement(
+    return /* @__PURE__ */ react_default.createElement("div", { className: `gantt is-large ${compact ? "is-compact" : ""}`, "aria-label": "\u0412\u0440\u0435\u043C\u044F \u043F\u043E \u0441\u0442\u0430\u0434\u0438\u044F\u043C" }, /* @__PURE__ */ react_default.createElement("div", { className: "gantt-rows" }, /* @__PURE__ */ react_default.createElement("div", { className: "gantt-grid", "aria-hidden": true }, ticks.map((f) => /* @__PURE__ */ react_default.createElement("i", { key: f, style: { left: at(f * 100) } }))), clock.gaps.length > 0 && /* @__PURE__ */ react_default.createElement("div", { className: "gantt-gaps" }, clock.gaps.map((g, i) => /* @__PURE__ */ react_default.createElement(
       "i",
       {
         key: i,
@@ -154,12 +215,13 @@ var OrcaPurpleflow = (() => {
       const bars = stageBars(run, clock, st.id, now, 0.4);
       const state = nodeState(run, st.id);
       const planned = plan[st.id];
-      const reachable = bars.length > 0 || st.id === run.next;
+      const reachable = run.rows.find((r) => r.id === st.id)?.attempts.length > 0;
       const tries = bars.filter((b) => !b.attempt.stage.startsWith("gate") && b.attempt.stage !== "limit").length;
       return /* @__PURE__ */ react_default.createElement(
         "button",
         {
           key: st.id,
+          "data-stage": st.id,
           "aria-current": current === st.id ? "step" : void 0,
           "aria-pressed": selected === st.id,
           className: `gantt-row is-click st-${state} ${planned ? `is-${planned}` : ""} ${selected === st.id ? "is-selected" : ""} ${current === st.id ? "is-current" : ""}`,
@@ -167,7 +229,7 @@ var OrcaPurpleflow = (() => {
           disabled: !reachable,
           title: reachable ? `\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0434\u0435\u0442\u0430\u043B\u0438 \xAB${st.title}\xBB` : st.hint
         },
-        /* @__PURE__ */ react_default.createElement("span", { className: "gantt-label" }, /* @__PURE__ */ react_default.createElement("span", { className: `gantt-node ${st.gate ? "is-gate-node" : ""}` }, state === "active" ? /* @__PURE__ */ react_default.createElement("span", { className: "node-spin" }) : STAGE_ICON[st.id]), /* @__PURE__ */ react_default.createElement("span", { className: "gantt-name" }, /* @__PURE__ */ react_default.createElement("span", null, st.title, tries > 1 && /* @__PURE__ */ react_default.createElement("em", null, " \xD7", tries)), /* @__PURE__ */ react_default.createElement("small", { className: `w-${planned === "skip" ? "skip" : state}` }, planned === "skip" ? "\u043F\u0440\u043E\u043F\u0443\u0441\u0442\u0438\u0442\u0441\u044F" : planned && state === "stale" ? "\u043F\u0440\u043E\u0439\u0434\u0451\u0442 \u0441\u043D\u043E\u0432\u0430" : WORD[state]))),
+        /* @__PURE__ */ react_default.createElement("span", { className: "gantt-label" }, /* @__PURE__ */ react_default.createElement("span", { className: `gantt-node ${st.gate ? "is-gate-node" : ""}` }, STAGE_ICON[st.id]), /* @__PURE__ */ react_default.createElement("span", { className: "gantt-name" }, /* @__PURE__ */ react_default.createElement("span", null, st.title, tries > 1 && /* @__PURE__ */ react_default.createElement("em", null, " \xD7", tries)), /* @__PURE__ */ react_default.createElement("small", { className: `w-${planned === "skip" ? "skip" : state}` }, planned === "skip" ? "\u043F\u0440\u043E\u043F\u0443\u0441\u0442\u0438\u0442\u0441\u044F" : planned && state === "stale" ? "\u043F\u0440\u043E\u0439\u0434\u0451\u0442 \u0441\u043D\u043E\u0432\u0430" : WORD[state]))),
         /* @__PURE__ */ react_default.createElement("span", { className: "gantt-track" }, planned === "planned" && /* @__PURE__ */ react_default.createElement(
           "i",
           {
@@ -177,17 +239,17 @@ var OrcaPurpleflow = (() => {
           }
         ), bars.map((b, i) => {
           const full = `${bars.length > 1 ? `#${b.attempt.attempt} \xB7 ` : ""}${b.took}`;
-          const label = compact || b.kind === "wait" || b.kind === "wait-live" ? "" : fits(b.width, full, axisWidth) ? full : fits(b.width, b.took, axisWidth) ? b.took : "";
+          const label = compact ? "" : fits(b.width, full, axisWidth) ? full : fits(b.width, b.took, axisWidth) ? b.took : "";
           return /* @__PURE__ */ react_default.createElement("i", { key: i, className: `gantt-bar g-${b.kind}`, style: { left: at(b.left), width: at(b.width) }, title: b.tip }, label && /* @__PURE__ */ react_default.createElement("b", null, label));
         })),
         /* @__PURE__ */ react_default.createElement("span", { className: "gantt-go", "aria-hidden": true }, /* @__PURE__ */ react_default.createElement("span", null, "\u0414\u0435\u0442\u0430\u043B\u0438"), /* @__PURE__ */ react_default.createElement(ChevronRight, { size: 16 }))
       );
-    }), /* @__PURE__ */ react_default.createElement("div", { ref: axis, className: "gantt-axis", style: reserve ? { marginRight: reserve } : void 0 }, ticks.map((f) => /* @__PURE__ */ react_default.createElement("span", { key: f }, f === 0 ? "0" : ms(span * f)))), /* @__PURE__ */ react_default.createElement("ul", { className: "gantt-legend" }, LEGEND.map((l) => /* @__PURE__ */ react_default.createElement("li", { key: l.kind }, /* @__PURE__ */ react_default.createElement("i", { className: `gantt-bar g-${l.kind}` }), l.label)), clock.gaps.length > 0 && /* @__PURE__ */ react_default.createElement("li", null, /* @__PURE__ */ react_default.createElement("i", { className: "gantt-gap-sample" }), "\u041F\u0430\u0443\u0437\u0430 \u043F\u043E\u0441\u043B\u0435 \u043E\u0448\u0438\u0431\u043A\u0438 \u0438\u043B\u0438 \u043E\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0438 \u2014 \u0432\u044B\u0440\u0435\u0437\u0430\u043D\u0430, ", ms(clock.paused))));
+    })), /* @__PURE__ */ react_default.createElement("div", { ref: axis, className: "gantt-axis", style: reserve ? { marginRight: reserve } : void 0 }, !ticks.length && /* @__PURE__ */ react_default.createElement("span", null, "\u041D\u0435\u0442 \u0434\u0430\u043D\u043D\u044B\u0445 \u043E \u0432\u0440\u0435\u043C\u0435\u043D\u0438"), ticks.map((f) => /* @__PURE__ */ react_default.createElement("span", { key: f, style: { left: `${f * 100}%` } }, f === 0 ? "0" : ms(span * f)))), /* @__PURE__ */ react_default.createElement("ul", { className: "gantt-legend" }, LEGEND.map((l) => /* @__PURE__ */ react_default.createElement("li", { key: l.kind }, /* @__PURE__ */ react_default.createElement("i", { className: `gantt-bar g-${l.kind}` }), l.label)), clock.gaps.length > 0 && /* @__PURE__ */ react_default.createElement("li", null, /* @__PURE__ */ react_default.createElement("i", { className: "gantt-gap-sample" }), "\u041F\u0430\u0443\u0437\u0430 \u043F\u043E\u0441\u043B\u0435 \u043E\u0448\u0438\u0431\u043A\u0438 \u0438\u043B\u0438 \u043E\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0438 \u2014 \u0432\u044B\u0440\u0435\u0437\u0430\u043D\u0430, ", ms(clock.paused))));
   }
 
   // integration/purpleflow/ui.tsx
-  function Button({ tone = "ghost", icon, children, busy, className = "", ...rest }) {
-    return /* @__PURE__ */ react_default.createElement("button", { ...rest, className: `btn btn-${tone} ${busy ? "is-busy" : ""} ${className}`, disabled: rest.disabled || busy }, busy ? /* @__PURE__ */ react_default.createElement("span", { className: "spinner", "aria-hidden": true }) : icon, children && /* @__PURE__ */ react_default.createElement("span", null, children));
+  function Button({ tone = "ghost", icon: icon2, children, busy, className = "", ...rest }) {
+    return /* @__PURE__ */ react_default.createElement("button", { ...rest, className: `btn btn-${tone} ${busy ? "is-busy" : ""} ${className}`, disabled: rest.disabled || busy }, busy ? /* @__PURE__ */ react_default.createElement("span", { className: "spinner", "aria-hidden": true }) : icon2, children && /* @__PURE__ */ react_default.createElement("span", null, children));
   }
   var TextArea = forwardRef(function TextArea2({ className = "", ...rest }, ref) {
     return /* @__PURE__ */ react_default.createElement("textarea", { ref, ...rest, "aria-label": "\u041A\u043E\u043C\u043C\u0435\u043D\u0442\u0430\u0440\u0438\u0439 \u043A \u0440\u0435\u0434\u0430\u043A\u0446\u0438\u0438", maxLength: 8e3, className: `input textarea ${className}` });
@@ -204,10 +266,13 @@ var OrcaPurpleflow = (() => {
     const { gate, comment, setComment, lineCount, busy, error } = props;
     const [open, setOpen] = useState(() => comment !== "");
     const keys = useRef(props);
+    const visibleBar = useRef(null);
     keys.current = props;
     useEffect(() => {
       const onKey = (e) => {
         if (e.key !== "Enter" || !(e.metaKey || e.ctrlKey) || e.repeat) return;
+        const bar = visibleBar.current;
+        if (!bar?.isConnected || !bar.getClientRects().length || !bar.closest(".tl-detail")?.contains(document.activeElement)) return;
         const p = keys.current;
         if (p.busy) return;
         const el = document.activeElement;
@@ -234,7 +299,7 @@ var OrcaPurpleflow = (() => {
     const stuck = gate === "limit" && props.stuck?.length ? props.stuck : null;
     const title = gate === "gate1" ? "\u0423\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043D\u0438\u0435 \u043F\u043B\u0430\u043D\u0430" : gate === "gate2" ? "\u041F\u0440\u0438\u0451\u043C\u043A\u0430" : stuck ? "\u0425\u043E\u0434\u044F\u0442 \u043F\u043E \u043A\u0440\u0443\u0433\u0443" : "\u041F\u043E\u043F\u044B\u0442\u043A\u0438 \u0438\u0441\u0447\u0435\u0440\u043F\u0430\u043D\u044B";
     const needsComment = gate !== "limit";
-    return /* @__PURE__ */ react_default.createElement("div", { className: "gatebar is-gate" }, /* @__PURE__ */ react_default.createElement("div", { className: "gate-sign", "aria-hidden": true }, gate === "gate2" ? /* @__PURE__ */ react_default.createElement(ClipboardCheck, { size: 17 }) : /* @__PURE__ */ react_default.createElement(UserRoundCheck, { size: 17 })), /* @__PURE__ */ react_default.createElement("div", { className: "gate-text" }, /* @__PURE__ */ react_default.createElement("strong", null, title), /* @__PURE__ */ react_default.createElement("span", null, gate === "gate1" && (props.diffShown ? lineCount ? `\u0417\u0430\u043C\u0435\u0447\u0430\u043D\u0438\u0439 \u043A \u043F\u043B\u0430\u043D\u0443: ${lineCount}. \u041E\u043D\u0438 \u0443\u0439\u0434\u0443\u0442 \u043F\u043B\u0430\u043D\u0438\u0440\u043E\u0432\u0449\u0438\u043A\u0443 \u043F\u0440\u0438 \u0432\u043E\u0437\u0432\u0440\u0430\u0442\u0435.` : "\u041A\u043E\u043C\u043C\u0435\u043D\u0442\u0430\u0440\u0438\u0439 \u043F\u043E\u043B\u0443\u0447\u0438\u0442 \u043F\u043B\u0430\u043D\u0438\u0440\u043E\u0432\u0449\u0438\u043A \u043F\u0440\u0438 \u0432\u043E\u0437\u0432\u0440\u0430\u0442\u0435." : "\u041F\u0440\u043E\u0432\u0435\u0440\u044C\u0442\u0435 \u0442\u0435\u043A\u0443\u0449\u0443\u044E \u0440\u0435\u0434\u0430\u043A\u0446\u0438\u044E \u043F\u043B\u0430\u043D\u0430."), gate === "gate2" && (props.diffShown ? `\u0417\u0430\u043C\u0435\u0447\u0430\u043D\u0438\u0439 \u043D\u0430 \u0441\u0442\u0440\u043E\u043A\u0430\u0445: ${lineCount}. \u041E\u043D\u0438 \u0443\u0439\u0434\u0443\u0442 \u0438\u0441\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044E \u043F\u0440\u0438 \u0432\u043E\u0437\u0432\u0440\u0430\u0442\u0435.` : "\u041F\u043E\u0441\u043C\u043E\u0442\u0440\u0438\u0442\u0435 \u0434\u0438\u0444\u0444 \u0438 \u0437\u0430\u043C\u0435\u0447\u0430\u043D\u0438\u044F \u0440\u0435\u0432\u044C\u044E\u0435\u0440\u0430."), gate === "limit" && (stuck ? "\u0420\u0435\u0432\u044C\u044E\u0435\u0440 \u0432\u0435\u0440\u043D\u0443\u043B \u0442\u0435 \u0436\u0435 \u0437\u0430\u043C\u0435\u0447\u0430\u043D\u0438\u044F \u043F\u043E\u0441\u043B\u0435 \u043F\u043E\u043F\u044B\u0442\u043A\u0438 \u0438\u0445 \u0438\u0441\u043F\u0440\u0430\u0432\u0438\u0442\u044C. \u0420\u0430\u0437\u0431\u0435\u0440\u0438\u0442\u0435 \u0441\u043F\u043E\u0440: \u0443\u0442\u043E\u0447\u043D\u0435\u043D\u0438\u0435 \u0443\u0432\u0438\u0434\u044F\u0442 \u0438 \u0438\u0441\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C, \u0438 \u0440\u0435\u0432\u044C\u044E\u0435\u0440." : "\u041C\u043E\u0436\u043D\u043E \u0434\u0430\u0442\u044C \u0438\u0441\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044E \u0435\u0449\u0451 \u043E\u0434\u043D\u0443 \u043F\u043E\u043F\u044B\u0442\u043A\u0443 \u0441 \u0432\u0430\u0448\u0438\u043C \u043A\u043E\u043C\u043C\u0435\u043D\u0442\u0430\u0440\u0438\u0435\u043C."))), stuck && /* @__PURE__ */ react_default.createElement("ul", { className: "gate-stuck", "aria-label": "\u0417\u0430\u043C\u0435\u0447\u0430\u043D\u0438\u044F, \u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u043D\u0435 \u0441\u0434\u0432\u0438\u043D\u0443\u043B\u0438\u0441\u044C" }, stuck.map((i, n) => /* @__PURE__ */ react_default.createElement("li", { key: n }, i.file && /* @__PURE__ */ react_default.createElement("code", null, i.file, i.line ? `:${i.line}` : ""), " ", i.message.split("\n")[0]))), (open || gate === "limit") && /* @__PURE__ */ react_default.createElement(
+    return /* @__PURE__ */ react_default.createElement("div", { ref: visibleBar, className: "gatebar is-gate" }, /* @__PURE__ */ react_default.createElement("div", { className: "gate-sign", "aria-hidden": true }, gate === "gate2" ? /* @__PURE__ */ react_default.createElement(ClipboardCheck, { size: 17 }) : /* @__PURE__ */ react_default.createElement(UserRoundCheck, { size: 17 })), /* @__PURE__ */ react_default.createElement("div", { className: "gate-text" }, /* @__PURE__ */ react_default.createElement("strong", null, title), /* @__PURE__ */ react_default.createElement("span", null, gate === "gate1" && (props.diffShown ? lineCount ? `\u0417\u0430\u043C\u0435\u0447\u0430\u043D\u0438\u0439 \u043A \u043F\u043B\u0430\u043D\u0443: ${lineCount}. \u041E\u043D\u0438 \u0443\u0439\u0434\u0443\u0442 \u043F\u043B\u0430\u043D\u0438\u0440\u043E\u0432\u0449\u0438\u043A\u0443 \u043F\u0440\u0438 \u0432\u043E\u0437\u0432\u0440\u0430\u0442\u0435.` : "\u041A\u043E\u043C\u043C\u0435\u043D\u0442\u0430\u0440\u0438\u0439 \u043F\u043E\u043B\u0443\u0447\u0438\u0442 \u043F\u043B\u0430\u043D\u0438\u0440\u043E\u0432\u0449\u0438\u043A \u043F\u0440\u0438 \u0432\u043E\u0437\u0432\u0440\u0430\u0442\u0435." : "\u041F\u0440\u043E\u0432\u0435\u0440\u044C\u0442\u0435 \u0442\u0435\u043A\u0443\u0449\u0443\u044E \u0440\u0435\u0434\u0430\u043A\u0446\u0438\u044E \u043F\u043B\u0430\u043D\u0430."), gate === "gate2" && (props.diffShown ? `\u0417\u0430\u043C\u0435\u0447\u0430\u043D\u0438\u0439 \u043D\u0430 \u0441\u0442\u0440\u043E\u043A\u0430\u0445: ${lineCount}. \u041E\u043D\u0438 \u0443\u0439\u0434\u0443\u0442 \u0438\u0441\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044E \u043F\u0440\u0438 \u0432\u043E\u0437\u0432\u0440\u0430\u0442\u0435.` : "\u041F\u043E\u0441\u043C\u043E\u0442\u0440\u0438\u0442\u0435 \u0434\u0438\u0444\u0444 \u0438 \u0437\u0430\u043C\u0435\u0447\u0430\u043D\u0438\u044F \u0440\u0435\u0432\u044C\u044E\u0435\u0440\u0430."), gate === "limit" && (stuck ? "\u0420\u0435\u0432\u044C\u044E\u0435\u0440 \u0432\u0435\u0440\u043D\u0443\u043B \u0442\u0435 \u0436\u0435 \u0437\u0430\u043C\u0435\u0447\u0430\u043D\u0438\u044F \u043F\u043E\u0441\u043B\u0435 \u043F\u043E\u043F\u044B\u0442\u043A\u0438 \u0438\u0445 \u0438\u0441\u043F\u0440\u0430\u0432\u0438\u0442\u044C. \u0420\u0430\u0437\u0431\u0435\u0440\u0438\u0442\u0435 \u0441\u043F\u043E\u0440: \u0443\u0442\u043E\u0447\u043D\u0435\u043D\u0438\u0435 \u0443\u0432\u0438\u0434\u044F\u0442 \u0438 \u0438\u0441\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C, \u0438 \u0440\u0435\u0432\u044C\u044E\u0435\u0440." : "\u041C\u043E\u0436\u043D\u043E \u0434\u0430\u0442\u044C \u0438\u0441\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044E \u0435\u0449\u0451 \u043E\u0434\u043D\u0443 \u043F\u043E\u043F\u044B\u0442\u043A\u0443 \u0441 \u0432\u0430\u0448\u0438\u043C \u043A\u043E\u043C\u043C\u0435\u043D\u0442\u0430\u0440\u0438\u0435\u043C."))), stuck && /* @__PURE__ */ react_default.createElement("ul", { className: "gate-stuck", "aria-label": "\u0417\u0430\u043C\u0435\u0447\u0430\u043D\u0438\u044F, \u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u043D\u0435 \u0441\u0434\u0432\u0438\u043D\u0443\u043B\u0438\u0441\u044C" }, stuck.map((i, n) => /* @__PURE__ */ react_default.createElement("li", { key: n }, i.file && /* @__PURE__ */ react_default.createElement("code", null, i.file, i.line ? `:${i.line}` : ""), " ", i.message.split("\n")[0]))), (open || gate === "limit") && /* @__PURE__ */ react_default.createElement(
       TextArea,
       {
         className: "gate-comment",
@@ -332,12 +397,12 @@ var OrcaPurpleflow = (() => {
     const item = entries.find((e) => e.gate.id === (selectedGateId ?? entry.gate.id)) || entry;
     return /* @__PURE__ */ react_default.createElement("div", { className: "details", "data-purpleflow": "StageDrawer" }, /* @__PURE__ */ react_default.createElement("header", { className: "drawer-head" }, /* @__PURE__ */ react_default.createElement("div", { className: "drawer-title" }, /* @__PURE__ */ react_default.createElement("strong", null, "\u0423\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043D\u0438\u0435 \u043F\u043B\u0430\u043D\u0430"), /* @__PURE__ */ react_default.createElement("span", null, pending ? "\u0416\u0434\u0451\u0442 \u0432\u0430\u0448\u0435\u0433\u043E \u0440\u0435\u0448\u0435\u043D\u0438\u044F" : entry.answer?.decision === "accept" ? "\u041F\u043B\u0430\u043D \u043F\u0440\u0438\u043D\u044F\u0442" : "\u041E\u0436\u0438\u0434\u0430\u0435\u0442\u0441\u044F \u043D\u043E\u0432\u0430\u044F \u0440\u0435\u0434\u0430\u043A\u0446\u0438\u044F"))), entries.length > 1 && /* @__PURE__ */ react_default.createElement("nav", { className: "attempts", "aria-label": "\u0420\u0435\u0434\u0430\u043A\u0446\u0438\u0438 \u043F\u043B\u0430\u043D\u0430" }, entries.map((e) => /* @__PURE__ */ react_default.createElement("button", { key: e.gate.id, "aria-label": "\u0420\u0435\u0434\u0430\u043A\u0446\u0438\u044F " + e.plan.revision, "aria-pressed": item === e, onClick: () => onRevision(e.gate.id) }, e.plan.revision))), /* @__PURE__ */ react_default.createElement("div", { className: "drawer-body" }, /* @__PURE__ */ react_default.createElement("article", { className: "doc" }, /* @__PURE__ */ react_default.createElement("header", { className: "doc-head" }, /* @__PURE__ */ react_default.createElement("h3", null, "\u0420\u0435\u0434\u0430\u043A\u0446\u0438\u044F ", item.plan.revision), /* @__PURE__ */ react_default.createElement("span", null, item.answer?.decision === "return" ? "\u0412\u043E\u0437\u0432\u0440\u0430\u0449\u0435\u043D\u0430" : item.answer?.decision === "accept" ? "\u041F\u0440\u0438\u043D\u044F\u0442\u0430" : item.gate.status === "pending" ? "\u041D\u0430 \u0441\u043E\u0433\u043B\u0430\u0441\u043E\u0432\u0430\u043D\u0438\u0438" : "\u0417\u0430\u043C\u0435\u043D\u0435\u043D\u0430")), /* @__PURE__ */ react_default.createElement("pre", { className: "tl-plan-text" }, item.plan.plan), item.answer?.comment && /* @__PURE__ */ react_default.createElement("p", null, "\u041A\u043E\u043C\u043C\u0435\u043D\u0442\u0430\u0440\u0438\u0439: ", item.answer.comment), item.gate.id !== entry.gate.id && drafts?.[item.gate.id] && drafts[item.gate.id] !== item.answer?.comment && /* @__PURE__ */ react_default.createElement("p", null, "\u0427\u0435\u0440\u043D\u043E\u0432\u0438\u043A \u043A\u043E\u043C\u043C\u0435\u043D\u0442\u0430\u0440\u0438\u044F (\u043D\u0435 \u043E\u0442\u043F\u0440\u0430\u0432\u043B\u0435\u043D): ", drafts[item.gate.id]))), item.gate.id === entry.gate.id && children);
   }
-  function mountPurpleflowTimeline(container, model, rows, onSelect, selected = "approval") {
+  function mountPurpleflowTimeline(container, model, rows, onSelect, selected = null) {
     const root = createRoot(container);
     const draw = (model2, rows2, onSelect2, nextSelected = selected) => {
       selected = nextSelected;
       const run = { model: model2, rows: rows2, status: rows2.some((r) => r.attempts.some((a) => a.running)) ? "waiting" : "stopped", next: rows2.find((r) => r.attempts.some((a) => a.running))?.id };
-      root.render(/* @__PURE__ */ react_default.createElement(Timeline, { run, current: model2.currentStage ?? run.next, selected, compact: true, onSelect: onSelect2 }));
+      root.render(/* @__PURE__ */ react_default.createElement(Timeline, { run, current: model2.currentStage ?? run.next, selected, compact: selected !== null, onSelect: onSelect2 }));
     };
     draw(model, rows, onSelect);
     const stop = () => root.unmount();

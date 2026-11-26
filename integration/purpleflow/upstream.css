@@ -1,0 +1,708 @@
+/* PurpleFlow MIT; see LICENSE and upstream.json. Selective rules scoped to Orca panel. */
+.orca-timeline .gantt {
+  margin-top: var(--s-5);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.orca-timeline .gantt-row {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: var(--s-3);
+  align-items: center;
+}
+.orca-timeline .gantt-label {
+  font-size: 11px;
+  color: var(--text-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.orca-timeline .gantt-track {
+  position: relative;
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.orca-timeline .gantt-bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  min-width: 3px;
+  border-radius: 4px;
+  transition:
+    width 0.8s var(--ease),
+    left 0.8s var(--ease);
+}
+.orca-timeline .g-done {
+  background: #6f7178;
+}
+.orca-timeline .g-live {
+  background: var(--accent-hi);
+  box-shadow: 0 0 10px rgba(138, 116, 238, 0.5);
+}
+.orca-timeline .g-fail {
+  background: var(--err);
+  opacity: 0.85;
+}
+.orca-timeline .g-stop {
+  background: var(--text-4);
+}
+.orca-timeline .g-wait,
+.orca-timeline .g-wait-live {
+  background: repeating-linear-gradient(135deg, rgba(214, 173, 102, 0.75) 0 3px, rgba(214, 173, 102, 0.25) 3px 6px);
+}
+.orca-timeline .g-wait-live {
+  animation: breathe 2s var(--ease-soft) infinite;
+}
+.orca-timeline .gantt-axis {
+  display: flex;
+  justify-content: space-between;
+  margin: 4px 0 0 104px;
+  font-size: 10.5px;
+  color: var(--text-4);
+  font-variant-numeric: tabular-nums;
+}
+.orca-timeline .gate-sign {
+  display: grid;
+  place-items: center;
+  color: var(--wait);
+  border-radius: 50%;
+}
+.orca-timeline .gantt.is-large {
+  position: relative;
+  gap: 10px;
+  margin-top: 0;
+}
+.orca-timeline .gantt.is-large .gantt-row {
+  grid-template-columns: 170px 1fr;
+  gap: var(--s-5);
+}
+.orca-timeline .gantt.is-large .gantt-label {
+  font-size: var(--fs-13);
+  color: var(--text-2);
+}
+.orca-timeline .gantt.is-large .gantt-track {
+  height: 26px;
+  border-radius: 8px;
+}
+.orca-timeline .gantt.is-large .gantt-bar {
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.orca-timeline .gantt.is-large .gantt-bar b {
+  padding: 0 8px;
+  font: 500 11px/1 var(--font-code);
+  color: #0c0d0f;
+  white-space: nowrap;
+}
+.orca-timeline .gantt.is-large .g-wait b,
+.orca-timeline .gantt.is-large .g-wait-live b {
+  color: #1a1408;
+}
+.orca-timeline .gantt.is-large .g-fail b {
+  color: #1a0c0f;
+}
+.orca-timeline .gantt.is-large .g-done {
+  background: #8a8c93;
+}
+.orca-timeline .gantt.is-large .gantt-axis {
+  margin-left: 190px;
+  font-size: 11.5px;
+  margin-top: 8px;
+}
+.orca-timeline .gantt-grid {
+  position: absolute;
+  left: 190px;
+  right: 0;
+  top: 0;
+  bottom: 48px;
+  pointer-events: none;
+}
+.orca-timeline .gantt-grid i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--line);
+}
+.orca-timeline .gantt-legend {
+  list-style: none;
+  margin: var(--s-6) 0 0 190px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-6);
+  font-size: var(--fs-12);
+  color: var(--text-3);
+}
+.orca-timeline .gantt-legend li {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.orca-timeline .gantt-legend .gantt-bar {
+  position: static;
+  width: 22px;
+  height: 10px;
+  display: inline-block;
+}
+.orca-timeline .gantt {
+  position: relative;
+}
+.orca-timeline .gantt-gaps {
+  position: absolute;
+  left: 104px;
+  right: 0;
+  top: -2px;
+  bottom: 22px;
+  pointer-events: none;
+}
+.orca-timeline .gantt.is-large .gantt-gaps {
+  left: 190px;
+  bottom: 74px;
+}
+.orca-timeline .gantt-gaps i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 7px;
+  margin-left: -3px;
+  pointer-events: auto;
+  cursor: help;
+  background: repeating-linear-gradient(180deg, var(--text-3) 0 3px, transparent 3px 7px) center / 1px 100% no-repeat;
+}
+.orca-timeline .gantt-gap-sample {
+  width: 10px;
+  height: 14px;
+  display: inline-block;
+  background: repeating-linear-gradient(180deg, var(--text-3) 0 3px, transparent 3px 7px) center / 1px 100% no-repeat;
+}
+.orca-timeline .gantt.is-large .g-wait b,
+.orca-timeline .gantt.is-large .g-wait-live b {
+  margin-left: 4px;
+  padding: 3px 6px;
+  border-radius: 5px;
+  background: rgba(18, 14, 6, 0.82);
+  color: var(--wait);
+}
+.orca-timeline .gantt.is-large .gantt-label {
+  text-align: left;
+  transition: color 0.25s var(--ease);
+}
+.orca-timeline .gantt.is-large .gantt-label:hover:not(:disabled) {
+  color: var(--text-1);
+}
+.orca-timeline .gantt-row button.gantt-label {
+  font: inherit;
+}
+.orca-timeline .gantt.is-large {
+  gap: 6px;
+}
+.orca-timeline .gantt.is-large .gantt-row.is-click {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: var(--s-5);
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  padding: 8px var(--s-3) 8px 10px;
+  margin: 0 calc(var(--s-3) * -1);
+  width: calc(100% + var(--s-3) * 2);
+  border-radius: var(--r-l);
+  transition:
+    background 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
+}
+.orca-timeline .gantt.is-large .gantt-row.is-click:hover:not(:disabled) {
+  background: var(--bg-4);
+}
+.orca-timeline .gantt.is-large .gantt-row.is-click:disabled {
+  cursor: default;
+}
+.orca-timeline .gantt.is-large .gantt-row.is-selected {
+  background: var(--bg-4);
+  box-shadow: inset 0 0 0 1px var(--line-3);
+}
+.orca-timeline .gantt.is-large .gantt-row.is-current:not(.is-selected) {
+  box-shadow: inset 0 0 0 1px rgba(214, 173, 102, 0.28);
+}
+.orca-timeline .gantt.is-large .gantt-label {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  min-width: 0;
+}
+.orca-timeline .gantt-node {
+  position: relative;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  background: var(--bg-5);
+  color: var(--text-2);
+}
+.orca-timeline .gantt-node.is-gate-node {
+  border-radius: 50%;
+}
+.orca-timeline .gantt-node .tab-live {
+  position: absolute;
+  inset: -4px;
+  width: auto;
+  height: auto;
+  border-width: 1.5px;
+}
+.orca-timeline .gantt-name {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.3;
+}
+.orca-timeline .gantt-name > span {
+  font-size: var(--fs-14);
+  font-weight: 500;
+  color: var(--text-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.orca-timeline .gantt-name em {
+  font-style: normal;
+  font: 500 11px/1 var(--font-code);
+  color: var(--text-3);
+}
+.orca-timeline .gantt-name small {
+  font-size: var(--fs-12);
+}
+.orca-timeline .gantt.is-large .gantt-track {
+  height: 30px;
+}
+.orca-timeline .gantt.is-large .gantt-grid,
+.orca-timeline .gantt.is-large .gantt-gaps {
+  left: 232px;
+}
+.orca-timeline .gantt.is-large .gantt-axis,
+.orca-timeline .gantt-legend {
+  margin-left: 232px;
+}
+.orca-timeline .gantt.is-large .gantt-bar b {
+  overflow: hidden;
+  text-overflow: clip;
+}
+.orca-timeline .drawer-head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-6) var(--s-6) var(--s-4) var(--s-8);
+  flex: none;
+}
+.orca-timeline .drawer-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  background: var(--bg-5);
+  color: var(--text-2);
+  flex: none;
+}
+.orca-timeline .drawer-icon.st-active {
+  background: var(--accent-wash);
+  color: var(--accent-hi);
+}
+.orca-timeline .drawer-icon.st-waiting {
+  background: var(--wait-wash);
+  color: var(--wait);
+}
+.orca-timeline .drawer-icon.st-failed {
+  background: var(--err-wash);
+  color: var(--err);
+}
+.orca-timeline .drawer-title {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.orca-timeline .drawer-title strong {
+  font-size: var(--fs-20);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+.orca-timeline .drawer-title span {
+  font-size: var(--fs-12);
+  color: var(--text-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.orca-timeline .drawer-body {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.orca-timeline .drawer-body > .scroll,
+.orca-timeline .drawer-body > .center,
+.orca-timeline .drawer-body > .empty,
+.orca-timeline .drawer-body > .diff {
+  flex: 1;
+}
+.orca-timeline .drawer-body > .pane-log {
+  position: absolute;
+  inset: 0;
+  padding: 0 var(--s-4) var(--s-4);
+  display: flex;
+}
+.orca-timeline .gantt.is-large .gantt-row.is-click {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+.orca-timeline .gantt.is-large .gantt-row.is-click {
+  grid-template-columns: 220px 1fr 76px;
+  cursor: pointer;
+}
+.orca-timeline .gantt.is-large .gantt-row.is-click:disabled {
+  cursor: default;
+}
+.orca-timeline .gantt-go {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2px;
+  color: var(--text-4);
+  font-size: var(--fs-12);
+  transition: color 0.25s var(--ease);
+}
+.orca-timeline .gantt-go span {
+  opacity: 0;
+  transform: translateX(6px);
+  transition:
+    opacity 0.25s var(--ease),
+    transform 0.35s var(--ease);
+}
+.orca-timeline .gantt-go svg {
+  transition: transform 0.35s var(--ease);
+}
+.orca-timeline .gantt-row.is-click:disabled .gantt-go {
+  visibility: hidden;
+}
+.orca-timeline .gantt-row.is-click:hover:not(:disabled) .gantt-go,
+.orca-timeline .gantt-row.is-selected .gantt-go {
+  color: var(--text-1);
+}
+.orca-timeline .gantt-row.is-click:hover:not(:disabled) .gantt-go span {
+  opacity: 1;
+  transform: none;
+}
+.orca-timeline .gantt-row.is-click:hover:not(:disabled) .gantt-go svg {
+  transform: translateX(3px);
+}
+.orca-timeline .gantt-row.is-click:hover:not(:disabled) .gantt-bar {
+  filter: brightness(1.18);
+}
+.orca-timeline .gantt-row.is-click:hover:not(:disabled) .gantt-name > span {
+  color: var(--text-1);
+}
+.orca-timeline .gantt-row.is-click:active:not(:disabled) {
+  transform: scale(0.995);
+}
+.orca-timeline .gantt.is-large .gantt-grid,
+.orca-timeline .gantt.is-large .gantt-gaps {
+  right: 88px;
+}
+.orca-timeline .gantt.is-large .gantt-axis,
+.orca-timeline .gantt-legend {
+  margin-right: 88px;
+}
+.orca-timeline .gantt-row.is-current:not(.is-selected) {
+  animation: rowHint 1.6s var(--ease) 0.7s 1 both;
+}
+.orca-timeline .gantt-go {
+  color: var(--text-3);
+}
+.orca-timeline .gantt-go svg {
+  width: 18px;
+  height: 18px;
+}
+.orca-timeline .details {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  margin: 0 var(--s-4) var(--s-2) 0;
+  border-radius: 22px;
+  background: var(--bg-2);
+  animation: detailsIn 0.5s var(--ease) both;
+}
+.orca-timeline .details .drawer-head {
+  padding: var(--s-5) var(--s-5) var(--s-4) var(--s-6);
+}
+.orca-timeline .details .plan {
+  grid-template-columns: 1fr;
+}
+.orca-timeline .details .doc,
+.orca-timeline .details .verdict {
+  background: var(--bg-3);
+}
+.orca-timeline .details .diff {
+  padding-top: 0;
+}
+.orca-timeline .gantt.is-compact {
+  gap: 4px;
+}
+.orca-timeline .gantt.is-compact .gantt-row.is-click {
+  grid-template-columns: 150px 1fr 18px;
+  gap: var(--s-3);
+  padding: 7px 8px;
+}
+.orca-timeline .gantt.is-compact .gantt-name small {
+  display: none;
+}
+.orca-timeline .gantt.is-compact .gantt-name em {
+  display: none;
+}
+.orca-timeline .gantt.is-compact .gantt-track {
+  height: 8px;
+  border-radius: 4px;
+}
+.orca-timeline .gantt.is-compact .gantt-bar {
+  border-radius: 4px;
+}
+.orca-timeline .gantt.is-compact .gantt-go span {
+  display: none;
+}
+.orca-timeline .gantt.is-compact .gantt-grid,
+.orca-timeline .gantt.is-compact .gantt-gaps,
+.orca-timeline .gantt.is-compact .gantt-axis,
+.orca-timeline .gantt.is-compact .gantt-legend {
+  display: none;
+}
+.orca-timeline .gantt.is-large .gantt-row.is-click {
+  transition:
+    grid-template-columns 0.72s var(--ease-panel),
+    background 0.25s var(--ease),
+    box-shadow 0.25s var(--ease),
+    padding 0.72s var(--ease-panel);
+}
+.orca-timeline .gantt.is-large .gantt-track {
+  transition:
+    height 0.6s var(--ease-panel),
+    border-radius 0.6s var(--ease-panel);
+}
+.orca-timeline .gantt-name small,
+.orca-timeline .gantt-name em,
+.orca-timeline .gantt-go span,
+.orca-timeline .gantt-bar b {
+  transition: opacity 0.35s var(--ease);
+}
+.orca-timeline .gantt.is-compact .gantt-name small,
+.orca-timeline .gantt.is-compact .gantt-name em {
+  display: inline;
+  opacity: 0;
+}
+.orca-timeline .gantt.is-compact .gantt-name small {
+  display: block;
+  height: 0;
+  overflow: hidden;
+}
+.orca-timeline .gantt-grid,
+.orca-timeline .gantt-gaps,
+.orca-timeline .gantt-axis,
+.orca-timeline .gantt-legend {
+  transition: opacity 0.4s var(--ease);
+}
+.orca-timeline .gantt.is-compact .gantt-grid,
+.orca-timeline .gantt.is-compact .gantt-gaps {
+  display: block;
+  opacity: 0;
+}
+.orca-timeline .gantt.is-compact .gantt-axis,
+.orca-timeline .gantt.is-compact .gantt-legend {
+  display: flex;
+  opacity: 0;
+  pointer-events: none;
+  height: 0;
+  margin-top: 0;
+  overflow: hidden;
+}
+.orca-timeline .details {
+  animation: detailsIn 0.62s var(--ease-panel) 0.12s both;
+}
+.orca-timeline .details.is-closing {
+  animation: detailsOut 0.42s var(--ease-panel) both;
+}
+.orca-timeline .details .drawer-body > * {
+  animation: tabIn 0.45s var(--ease) 0.3s both;
+}
+.orca-timeline .doc,
+.orca-timeline .doc.bezel {
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--bg-2);
+  box-shadow: none;
+}
+.orca-timeline .doc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding: var(--s-5) var(--s-6) 0;
+  font: 450 12px/1 var(--font-code);
+  color: var(--text-3);
+}
+.orca-timeline .doc-head > span {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.orca-timeline .doc-head > span:first-child {
+  flex: none;
+}
+.orca-timeline .gatebar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  flex-wrap: wrap;
+  margin: 0 var(--s-4) var(--s-4);
+  padding: var(--s-4) var(--s-4) var(--s-4) var(--s-5);
+  border-radius: 20px;
+  background: var(--bg-4);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.orca-timeline .gatebar.is-gate {
+  animation: rise 0.5s var(--ease);
+}
+.orca-timeline .gate-sign {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: var(--wait-wash);
+  box-shadow: inset 0 0 0 1px rgba(214, 173, 102, 0.35);
+  flex: none;
+}
+.orca-timeline .gate-sign i {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  width: 2.5px;
+  border-radius: 2px;
+  background: var(--wait);
+}
+.orca-timeline .gate-sign i:first-child {
+  left: 13px;
+}
+.orca-timeline .gate-sign i:last-child {
+  right: 13px;
+}
+.orca-timeline .gate-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+  flex: 1;
+  gap: 2px;
+}
+.orca-timeline .gate-text strong {
+  font-weight: 500;
+}
+.orca-timeline .gate-text span {
+  color: var(--text-3);
+  font-size: var(--fs-13);
+}
+.orca-timeline .gate-comment {
+  order: 5;
+  flex-basis: 100%;
+  animation: rise 0.35s var(--ease);
+  background: var(--bg-2);
+}
+.orca-timeline .gate-actions {
+  display: flex;
+  gap: var(--s-2);
+  align-items: center;
+  margin-left: auto;
+}
+.orca-timeline .btn {
+  -webkit-app-region: no-drag;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  height: 38px;
+  padding: 0 var(--s-5);
+  border-radius: var(--r-pill);
+  font-weight: 500;
+  font-size: var(--fs-13);
+  white-space: nowrap;
+  transition:
+    background 0.3s var(--ease),
+    box-shadow 0.3s var(--ease),
+    color 0.3s var(--ease),
+    transform 0.2s var(--ease),
+    opacity 0.3s var(--ease);
+}
+.orca-timeline .btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+.orca-timeline .btn:disabled {
+  opacity: 0.35;
+}
+.orca-timeline .btn:has(> svg:only-child),
+.orca-timeline .btn:has(> .spinner:only-child) {
+  width: 38px;
+  padding: 0;
+}
+.orca-timeline .btn-primary {
+  color: #fff;
+  background: var(--accent);
+  padding: 0 var(--s-6);
+}
+.orca-timeline .btn-primary:hover:not(:disabled) {
+  background: #9683f3;
+}
+.orca-timeline .btn-approve {
+  color: #0c0d0f;
+  background: #ececee;
+  padding: 0 var(--s-6);
+}
+.orca-timeline .btn-approve:hover:not(:disabled) {
+  background: #fff;
+}
+.orca-timeline .btn-approve svg {
+  color: #2f8a62;
+}
+.orca-timeline .btn-ghost {
+  background: var(--bg-5);
+  color: var(--text-1);
+}
+.orca-timeline .btn-ghost:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.12);
+}
+.orca-timeline .btn-quiet {
+  color: var(--text-2);
+}
+.orca-timeline .btn-quiet:hover:not(:disabled) {
+  background: var(--bg-4);
+  color: var(--text-1);
+}
+.orca-timeline .btn-danger {
+  color: var(--err);
+  background: var(--err-wash);
+}
+.orca-timeline .btn-danger:hover:not(:disabled) {
+  background: rgba(223, 126, 141, 0.14);
+}
+.orca-timeline .actionbar-error {
+  color: var(--err);
+  font-size: var(--fs-13);
+  max-width: 640px;
+}

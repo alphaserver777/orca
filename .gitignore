@@ -8,3 +8,5 @@ auth.json
 *.sqlite*
 *.db*
 /.migration/
+/timeline/.local/
+/integration/.local/

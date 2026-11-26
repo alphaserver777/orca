@@ -1,0 +1,87 @@
+{
+  "base": "21e640f",
+  "source": "../orca-workflow-plan-decisions",
+  "snapshot": "unfinished working diff",
+  "files": {
+    "timeline/launch.mjs": "73ac2ad3de30a3380c05eb2252a2afdd863fd66ee274d4c89e255a418498fdfc",
+    "timeline/view.mjs": "6d030f756c8254b4ccbac48c82387b05f81fecaf04d4581d4df64771f7da5d20",
+    "timeline/decision-server.mjs": "be60fa0eea0628691f3b6fbc1c6b5ed1cbab2f09f21c5ba04a67f9727d4ce20b",
+    "timeline/decision-view.mjs": "0c62b75439a7cd89118b58f8d5b0bfea55a0bb5175d781a3f5585d9d3c79c564",
+    "timeline/decisions.mjs": "2bdb464c289868de4331af5a04b9c31ffeb93edaea7f32a9367348a12af7b23f",
+    "timeline/prepare_server.py": "216cb6b528a3b7ed20f5bbcdd163bd5cb00d5dd0c8901f190de5033017a92122",
+    "timeline/test-decisions.mjs": "22eb37328a663f883c99c40eaaec753575fcd167f6ded07eb6e09f068e916a19",
+    "timeline/test-decision-browser.mjs": "87d44f9079783130097571bc4b00d3ae9f322cd2fab6c0fb0e97c6015898c358"
+  },
+  "refreshedFiles": {
+    "timeline/launch.mjs": "7a491a4b16c3f44d124a5868b5a90a2d6ec6a54ffaf808d7c242050f7378d329",
+    "timeline/decision-view.mjs": "3c7ce2d22f9996881ab6375eaac876c8fce96561d52767fff40fc9489a7db88b",
+    "timeline/decision-server.mjs": "7f13d338c8da0fc6f6db826ba0ac199b71287163c1bfb3cab509cd7f0987d352",
+    "timeline/decisions.mjs": "c219abad69ee81a67eb2234459656d8c3f84556fa24176048aac3677340edc94",
+    "timeline/prepare_server.py": "e73392b07fcfa7d58859700ffd1e5110c9ff25cf39868af50a97122883b3ffbc",
+    "timeline/test-decisions.mjs": "6a256d7df5999885a7dee91e4d852f947cd6c8c44d4b0e52a3a7a40714bda6dc"
+  },
+  "integratedBackend": {
+    "timeline/decision-server.mjs": "8b66d0170d535ebe19954b0b4c98beda519b2630b6a5371bc1cacd472c9853e1",
+    "timeline/decisions.mjs": "e63d7f4357ce76a27ad7edd23ba78ace7f5f831c0e1f4cf0ebabf75078899290",
+    "timeline/prepare_server.py": "e73392b07fcfa7d58859700ffd1e5110c9ff25cf39868af50a97122883b3ffbc"
+  },
+  "finalCommit": "86d147894d82f55f771180e8cab81ee9b594e10f",
+  "finalFiles": {
+    "timeline/decision-server.mjs": {
+      "sha256": "0264447723ac288706f236d0e238ea660d50ae420a7ff01780b9a81a78de0657",
+      "integratedByteIdentical": false
+    },
+    "timeline/decisions.mjs": {
+      "sha256": "c219abad69ee81a67eb2234459656d8c3f84556fa24176048aac3677340edc94",
+      "integratedByteIdentical": false
+    },
+    "timeline/prepare_server.py": {
+      "sha256": "e73392b07fcfa7d58859700ffd1e5110c9ff25cf39868af50a97122883b3ffbc",
+      "integratedByteIdentical": true
+    },
+    "timeline/launch.mjs": {
+      "sha256": "7a491a4b16c3f44d124a5868b5a90a2d6ec6a54ffaf808d7c242050f7378d329",
+      "integratedByteIdentical": true
+    },
+    "timeline/test-decisions.mjs": {
+      "sha256": "6a256d7df5999885a7dee91e4d852f947cd6c8c44d4b0e52a3a7a40714bda6dc",
+      "integratedByteIdentical": true
+    },
+    "timeline/test-streams.mjs": {
+      "sha256": "b514eaab67f6cbb5053315d4ce100ce3e270c424a894cf014b99be17ff58dfab",
+      "integratedByteIdentical": true
+    },
+    "timeline/test_prepare_server.py": {
+      "sha256": "d452a58f3fbe2a924ec4fa155257e24acead31103d1e0cb43a8f9c9d20f77810",
+      "integratedByteIdentical": true
+    }
+  },
+  "uiAdaptation": "decision-view.openPlan and view are deliberate PurpleFlow derivatives; planTransport/watchPlan retained from final source",
+  "extensions": [
+    {
+      "commit": "8baeaa4c9a3c1937a95ae8d3f8f97b48356a8797",
+      "relativeTo": "86d1478",
+      "integration": "64da1d9; native show(stageId), controller lifecycle and per-context selection"
+    },
+    {
+      "commit": "9ed36cf6a6f39fcb52f7d90870ed63eb68ddf7a1",
+      "relativeTo": "8baeaa4",
+      "integration": "68790d2; targeted historyRootId, bound actions unchanged"
+    }
+  ],
+  "effectiveFiles": {
+    "timeline/decision-server.mjs": "8b66d0170d535ebe19954b0b4c98beda519b2630b6a5371bc1cacd472c9853e1",
+    "timeline/prepare_server.py": "e73392b07fcfa7d58859700ffd1e5110c9ff25cf39868af50a97122883b3ffbc",
+    "timeline/decisions.mjs": "e63d7f4357ce76a27ad7edd23ba78ace7f5f831c0e1f4cf0ebabf75078899290",
+    "timeline/attempts.mjs": "256a15f5399e7e64335d8835156d4e998c8e44b7bcc817a0808f9db68a5e80d8",
+    "timeline/attempt-view.mjs": "44efd583f60f0fc7f24a12e302f2ee6aad1e632f6a8192dfb4e10b62ef65283b",
+    "timeline/bindings.mjs": "860bfe6c7eefaa07651ef804342a35edc8bdd13742b27a26f92826ed1b9d6790",
+    "timeline/model.mjs": "d5e65780990fcb8f74ba5cf9044c5f0c6ba83755c0bc7adea8f1aeeb505e6ffa",
+    "timeline/view.mjs": "b5bc6eeb842f7aa5599da34b445ea97a8d34a0276b978afa874d04fa7cc8d2b8",
+    "timeline/selection.mjs": "2dd5fd67d8081490d0ba0aebe2a036b8fc3112d275d5766f439d59dac0653bdf"
+  },
+  "integrationCorrections": [
+    "P1: decisionRequest receives checked current entry inside SAVEPOINT, not synthetic {id}; server person/binding/CAS checks preserved",
+    "P2: scoped context and plan revision selection survive remount/reload; restored historical revision has no actions"
+  ]
+}

@@ -1,0 +1,15 @@
+import {createRequire} from 'node:module';
+import {readFileSync,writeFileSync} from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=path.dirname(fileURLToPath(import.meta.url));
+const require=createRequire(import.meta.url);
+const {build}=require(process.env.ESBUILD_MODULE||path.join(root,'.local/tools/node_modules/esbuild'));
+const nativeReact=`const React=OrcaTimelineReact();export default React;export const {useEffect,useState,useRef,forwardRef}=React;`;
+const nativeDOM=`export const createRoot=(...args)=>OrcaTimelineClient().createRoot(...args);`;
+const icon=`import React from 'react';
+const make=d=>({size=16,...props})=>React.createElement('svg',{...props,width:size,height:size,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor',strokeWidth:1.7,strokeLinecap:'round',strokeLinejoin:'round','aria-hidden':true},React.createElement('path',{d}));
+export const ChevronRight=make('m9 5 7 7-7 7'),CircleCheck=make('M9 12l2 2 4-4 M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0'),RotateCcw=make('M3 10a9 9 0 1 1 0 4 M3 4v6h6'),ClipboardCheck=make('M9 5H5v16h14V5h-4 M9 3h6v4H9z M9 14l2 2 4-4'),UserRoundCheck=make('M15 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0 M3 21v-2a7 7 0 0 1 12-5 M16 19l2 2 4-6'),MessageCircleQuestion=make('M21 11a9 9 0 0 1-9 9H3l1-5a9 9 0 1 1 17-4 M9 8a3 3 0 0 1 6 0c0 2-3 2-3 4 M12 15h.01'),Globe=make('M2 12h20 M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20 M12 2c6 6 6 14 0 20-6-6-6-14 0-20'),Wrench=make('m14 6 4 4 4-4a7 7 0 0 1-9 9L6 22l-4-4 7-7a7 7 0 0 1 9-9z');`;
+const result=await build({entryPoints:[path.join(root,'purpleflow/entry.tsx')],bundle:true,write:false,format:'iife',globalName:'OrcaPurpleflow',jsxFactory:'React.createElement',jsxFragment:'React.Fragment',plugins:[{name:'native-orca',setup(build){build.onResolve({filter:/^(react|react-dom\/client|lucide-react)$/},args=>({path:args.path,namespace:'orca-native'}));build.onLoad({filter:/.*/,namespace:'orca-native'},args=>({contents:args.path==='react'?nativeReact:args.path==='lucide-react'?icon:nativeDOM,loader:'js'}));}}]});
+const license=readFileSync(path.join(root,'purpleflow/LICENSE'),'utf8');
+writeFileSync(process.argv[2],`/* PurpleFlow 0.10.0, 6476bf53c987b426418acad148b449ffbf4d4072\n${license}*/\n`+result.outputFiles[0].text);

@@ -1,0 +1,51 @@
+{
+  "repository": "https://github.com/PurpleSchool/purpleflow",
+  "tag": "0.10.0",
+  "commit": "6476bf53c987b426418acad148b449ffbf4d4072",
+  "files": {
+    "Timeline.tsx": {
+      "source": "app/src/renderer/src/components/Timeline.tsx",
+      "sha256": "b7a2241f756fb386c888c6f536aabd7ac66ec6f20282bbb0eca9640d398e3d2a"
+    },
+    "GateBar.tsx": {
+      "source": "app/src/renderer/src/screens/run/GateBar.tsx",
+      "sha256": "98cd5d1a88196554716588bdf5e93b5f1357dd88b671fa64c025e9a6e0f44b84"
+    },
+    "keyboard.ts": {
+      "source": "app/src/renderer/src/lib/keyboard.ts",
+      "sha256": "1fae99a15523eecd54a526b1fb6e27630dc980a58bf07c6ba3c65411954fa6ab"
+    },
+    "app/src/renderer/src/styles/timeline.css": {
+      "source": "app/src/renderer/src/styles/timeline.css",
+      "sha256": "f28caabcd933c3e8d387cd986c32187ec415b5804bbfec9e6787c8ea827d7623"
+    },
+    "app/src/renderer/src/styles/run.css": {
+      "source": "app/src/renderer/src/styles/run.css",
+      "sha256": "bd2060d8984e10dd1c18ee06d8206a2a1eb64610fdb7b86ea5219b02c3573f12"
+    },
+    "app/src/renderer/src/styles/base.css": {
+      "source": "app/src/renderer/src/styles/base.css",
+      "sha256": "67e206e0f35bd2f3cedacc9089b6f7b53700eb5c14f7bf33a3ffb84b8589a7cd"
+    },
+    "app/src/renderer/src/screens/run/StageDrawer.tsx": {
+      "source": "app/src/renderer/src/screens/run/StageDrawer.tsx",
+      "sha256": "53c4dce6f1649c173d59afe1b9f9dae21251444862d7b97dcfb45533e2c730e8",
+      "fragments": "drawer-head, drawer-title, revision tabs, drawer-body; Orca gate history substitutes RunFile attempts"
+    },
+    "app/src/renderer/src/components/ui.tsx": {
+      "source": "app/src/renderer/src/components/ui.tsx",
+      "sha256": "3e2ba90ab4c1921175fd16151b9bb4ec7f88487fddfe3dbdd2409115f2ebf65a",
+      "fragments": "Button and TextArea"
+    },
+    "app/src/renderer/src/screens/NewTask.tsx": {
+      "source": "app/src/renderer/src/screens/NewTask.tsx",
+      "sha256": "15c9aafcc620c94a0eca9fc174ede4e1afe417ff977d91c1d02e425641e634ef",
+      "fragments": "Mode selection map/buttons (267-295), adapted to the existing Orca DOM factory in composer/purpleflow-modes.mjs; core form behavior remains 3c01792"
+    },
+    "app/src/renderer/src/components/Sidebar.tsx": {
+      "source": "app/src/renderer/src/components/Sidebar.tsx",
+      "sha256": "8d360d3eacc0860d0ffeab878683252580f8b6a5cce8e8074de11531d5054920",
+      "fragments": "Create menu (133–168): task/chat labels, descriptions and icon layout; adapted to native Orca plus with original worktree action as the third item"
+    }
+  }
+}

@@ -1,0 +1,177 @@
+import React from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { ChevronRight } from 'lucide-react';
+import type { RunFile, StageId } from '@purpleflow/core';
+import { nodeState, runStages, plannedRoute } from './native';
+import { STAGE_ICON } from './native';
+import { activeClock, ms } from './native';
+import { stageBars, type BarKind } from './native';
+
+const LEGEND: { kind: BarKind; label: string }[] = [
+  { kind: 'done', label: 'Работа агента или оркестратора' },
+  { kind: 'live', label: 'Идёт сейчас' },
+  { kind: 'fail', label: 'Неудачная попытка' },
+  { kind: 'wait', label: 'Ожидание решения человека' },
+];
+
+/** Тикает раз в секунду, пока прогон жив, — чтобы текущие полоски росли. */
+export function useNow(run: RunFile): number {
+  const live = run.status === 'running' || run.status === 'waiting';
+  const [now, setNow] = useState(Date.now());
+  useEffect(() => {
+    if (!live) return;
+    const t = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(t);
+  }, [live]);
+  return live ? now : Date.now();
+}
+
+/** Большой гант: строка на стадию, полоска на попытку; ожидание человека — штриховкой. */
+const WORD: Record<string, string> = {
+  idle: 'впереди',
+  active: 'работает',
+  waiting: 'ждёт вас',
+  done: 'готово',
+  failed: 'ошибка',
+  stopped: 'остановлено',
+  stale: 'будет повторено',
+};
+
+/** Сколько символов влезает в полоску: ширина трека ~ 1100px, моноширинный 11px ≈ 7px на символ. */
+const fits = (widthPct: number, text: string, trackWidth: number) => (widthPct / 100) * trackWidth > text.length * 7 + 18;
+
+export function Timeline({
+  run,
+  onSelect,
+  selected = null,
+  current = null,
+  compact = false,
+}: {
+  run: RunFile;
+  onSelect?: (s: StageId) => void;
+  selected?: StageId | null;
+  current?: StageId | null;
+  /** Свёрнутый вид в левой колонке, пока справа открыты детали стадии. */
+  compact?: boolean;
+}) {
+  const now = useNow(run);
+  const clock = activeClock(run, now, { compressGates: true });
+  const span = Math.max(1000, clock.total);
+  const axis=useRef<HTMLDivElement>(null),[axisWidth,setAxisWidth]=useState(0);
+  useEffect(()=>{const node=axis.current;if(!node)return;const observer=new ResizeObserver(()=>setAxisWidth(node.clientWidth));observer.observe(node);return ()=>observer.disconnect();},[]);
+  const divisions=axisWidth>=300?4:axisWidth>=180?2:1;
+  const ticks = Array.from({length:divisions+1},(_,i)=>i/divisions);
+  const plan = plannedRoute(run);
+  // Шаги маршрута — лесенкой справа от «сейчас»: реальная шкала сжимается, освобождая место под них.
+  const steps = runStages(run)
+    .map((s) => s.id)
+    .filter((id) => plan[id] === 'planned');
+  // Место справа под шаги: по 20px на шаг (18px пунктир + зазор 2px); реальная шкала — левее.
+  const reserve = steps.length ? steps.length * 20 + 8 : 0;
+  const at = (pct: number) => (reserve ? `calc((100% - ${reserve}px) * ${pct / 100})` : `${pct}%`);
+
+  return (
+    <div className={`gantt is-large ${compact ? 'is-compact' : ''}`} aria-label="Время по стадиям">
+      <div className="gantt-grid" aria-hidden>
+        {ticks.map((f) => (
+          <i key={f} style={{ left: at(f * 100) }} />
+        ))}
+      </div>
+      {clock.gaps.length > 0 && (
+        <div className="gantt-gaps">
+          {clock.gaps.map((g, i) => (
+            <i
+              key={i}
+              style={{ left: at((g.at / span) * 100) }}
+              title={`Прогон стоял ${ms(g.ms)} — после ошибки или остановки. Это время не учитывается.`}
+            />
+          ))}
+        </div>
+      )}
+      {runStages(run).map((st) => {
+        const bars = stageBars(run, clock, st.id, now, 0.4);
+        const state = nodeState(run, st.id);
+        const planned = plan[st.id];
+        const reachable = bars.length > 0 || st.id === run.next;
+        const tries = bars.filter((b) => !b.attempt.stage.startsWith('gate') && b.attempt.stage !== 'limit').length;
+        return (
+          <button
+            key={st.id}
+            aria-current={current === st.id ? "step" : undefined}
+            aria-pressed={selected === st.id}
+            className={`gantt-row is-click st-${state} ${planned ? `is-${planned}` : ''} ${selected === st.id ? 'is-selected' : ''} ${current === st.id ? 'is-current' : ''}`}
+            onClick={() => onSelect?.(st.id)}
+            disabled={!reachable}
+            title={reachable ? `Открыть детали «${st.title}»` : st.hint}
+          >
+            <span className="gantt-label">
+              <span className={`gantt-node ${st.gate ? 'is-gate-node' : ''}`}>
+                {/* Идёт работа — вместо иконки крутится кружок внутри узла. */}
+                {state === 'active' ? <span className="node-spin" /> : STAGE_ICON[st.id]}
+              </span>
+              <span className="gantt-name">
+                <span>
+                  {st.title}
+                  {tries > 1 && <em> ×{tries}</em>}
+                </span>
+                <small className={`w-${planned === 'skip' ? 'skip' : state}`}>
+                  {planned === 'skip' ? 'пропустится' : planned && state === 'stale' ? 'пройдёт снова' : WORD[state]}
+                </small>
+              </span>
+            </span>
+            <span className="gantt-track">
+              {/* Запланированный следующий шаг — пунктиром в конце шкалы, чтобы было видно, куда прогон пойдёт дальше. */}
+              {planned === 'planned' && (
+                <i
+                  className="gantt-ghost"
+                  style={{ left: `calc(100% - ${reserve - 6 - steps.indexOf(st.id) * 20}px)`, width: 18 }}
+                  title={`Дальше по маршруту: шаг ${steps.indexOf(st.id) + 1} из ${steps.length}`}
+                />
+              )}
+              {bars.map((b, i) => {
+                const full = `${bars.length > 1 ? `#${b.attempt.attempt} · ` : ''}${b.took}`;
+                // Ожидание человека — фиксированный слот без времени (точное время — в подсказке).
+                const label =
+                  compact || b.kind === 'wait' || b.kind === 'wait-live'
+                    ? ''
+                    : fits(b.width, full,axisWidth)
+                      ? full
+                      : fits(b.width, b.took,axisWidth)
+                        ? b.took
+                        : '';
+                return (
+                  <i key={i} className={`gantt-bar g-${b.kind}`} style={{ left: at(b.left), width: at(b.width) }} title={b.tip}>
+                    {label && <b>{label}</b>}
+                  </i>
+                );
+              })}
+            </span>
+            <span className="gantt-go" aria-hidden>
+              <span>Детали</span>
+              <ChevronRight size={16} />
+            </span>
+          </button>
+        );
+      })}
+      <div ref={axis} className="gantt-axis" style={reserve ? { marginRight: reserve } : undefined}>
+        {ticks.map((f) => (
+          <span key={f}>{f === 0 ? '0' : ms(span * f)}</span>
+        ))}
+      </div>
+      <ul className="gantt-legend">
+        {LEGEND.map((l) => (
+          <li key={l.kind}>
+            <i className={`gantt-bar g-${l.kind}`} />
+            {l.label}
+          </li>
+        ))}
+        {clock.gaps.length > 0 && (
+          <li>
+            <i className="gantt-gap-sample" />
+            Пауза после ошибки или остановки — вырезана, {ms(clock.paused)}
+          </li>
+        )}
+      </ul>
+    </div>
+  );
+}

@@ -1,0 +1,50 @@
+// Long, genuine native chat rendered by a finite test provider; no model calls.
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import {readFile,writeFile} from 'node:fs/promises';
+import {execFileSync} from 'node:child_process';
+import path from 'node:path';
+import {sendEnvelope} from '../composer/start.mjs';
+const root=process.env.ORCA_INTEGRATION_ROOT,require=createRequire(import.meta.url),{chromium}=require(process.env.PLAYWRIGHT_MODULE);
+const instance=JSON.parse(await readFile(path.join(root,'instance/instance.json'))),fixtures=JSON.parse(await readFile(path.join(root,'overview-fixtures.json')));
+const provider=path.join(root,'bin/codex'),original=await readFile(provider,'utf8'),anchor='try:answer=json.dumps(coordinate(text))';
+assert.ok(original.includes(anchor));
+const paragraphs=Array.from({length:65},(_,i)=>`ТЕСТОВЫЙ КОНТЕКСТ ${i+1}. Это конечный ответ тестового провайдера для проверки прокрутки штатного чата.\n\n`).join('');
+const patched=original.replace(anchor,'try:answer='+JSON.stringify(paragraphs)+' if text=="OVERVIEW_SCROLL_FIXTURE" else json.dumps(coordinate(text))');
+const env=Object.fromEntries(Object.entries(process.env).filter(([k])=>!k.startsWith('ORCA_')&&!k.startsWith('CODEX_')));
+Object.assign(env,{HOME:instance.home,ORCA_USER_DATA_PATH:instance.profile,ORCA_INSTANCE_ID:'timeline-disposable-'+instance.port,COMPOSER_TEST_ROOT:root});
+const cli=(...args)=>JSON.parse(execFileSync(path.join(instance.runtime,'bin/orca-ide'),[...args,'--json'],{env,encoding:'utf8'}));
+let browser;
+try{
+ await writeFile(provider,patched);
+ const launch=cli('agent','launch','--agent','codex','--surface','chat','--worktree','id:'+fixtures.parent.id);
+ const sessionId=launch.result.outcome.sessionId||launch.result.outcome.handle.replace(/^(?:orca_session_id:|structured-agent-session-)/,'');
+ cli('chat','rename','--session',sessionId,'--name','ТЕСТ: длинный чат');
+ browser=await chromium.launchPersistentContext(path.join(root,'instance/overview-browser'),{headless:true,executablePath:process.env.PLAYWRIGHT_EXECUTABLE_PATH,viewport:{width:1440,height:1000}});
+ const page=await browser.newPage();page.setDefaultTimeout(120000);const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('http://127.0.0.1:'+instance.port+'/web-index.html',{waitUntil:'domcontentloaded'});
+ await page.locator('[data-worktree-title-inline-rename]:visible').filter({hasText:'overview-parent'}).first().click();
+ await page.getByText('ТЕСТ: длинный чат',{exact:true}).last().click();
+ const setting=await page.evaluate(()=>window.api.runtime.call({method:'settings.getAgentLaunch',params:null}));
+ assert.equal(setting.result.settings.agentCmdOverrides.codex,provider);
+ const history=await page.evaluate(sessionId=>window.api.runtime.call({method:'agentSession.history',params:{sessionId,direction:'tail',limit:1}}),sessionId);
+ const message=await sendEnvelope(sessionId,'OVERVIEW_SCROLL_FIXTURE');message.envelope.expectedRuntimeFence=history.result.page.fence;
+ const sent=await page.evaluate(params=>window.api.runtime.call({method:'agentSession.send',params}),message);assert.equal(sent.ok,true);
+ await page.getByText(/ТЕСТОВЫЙ КОНТЕКСТ 65\./).waitFor();
+ const editor=page.locator('[contenteditable=true]').first();await editor.fill('ТЕСТ: черновик и длинный чат сохраняются');
+ await page.getByRole('button',{name:'Таймлайн',exact:true}).click();const panel=page.locator('#orca-timeline-panel');await panel.locator('.tl-task').nth(3).waitFor();
+ const scroll=await page.evaluate(()=>{
+   const left=document.querySelector('#orca-timeline-panel').getBoundingClientRect().left;
+   const node=[...document.querySelectorAll('*')].find(n=>{const r=n.getBoundingClientRect();return r.x>=320&&r.right<=left+1&&r.height>100&&n.scrollHeight>n.clientHeight+100&&/auto|scroll/.test(getComputedStyle(n).overflowY)});
+   if(!node)return null;node.scrollTop=Math.floor((node.scrollHeight-node.clientHeight)/2);window.__overviewScroll={node,top:node.scrollTop,editor:document.querySelector('[contenteditable=true]')};return {top:node.scrollTop,range:node.scrollHeight-node.clientHeight};
+ });assert.ok(scroll?.top>0);
+ await panel.locator('.tl-task').filter({hasText:'ТЕСТ: соседняя задача того же Run'}).click();
+ assert.equal(await page.evaluate(()=>window.__overviewScroll.node.isConnected&&window.__overviewScroll.node.scrollTop===window.__overviewScroll.top&&window.__overviewScroll.editor===document.querySelector('[contenteditable=true]')),true);
+ assert.equal(await editor.innerText(),'ТЕСТ: черновик и длинный чат сохраняются');
+ const button=panel.locator('.tl-task[aria-pressed=true]');assert.equal(await button.evaluate(n=>document.activeElement===n),true);
+ await panel.locator('.tl-task').filter({hasText:'ТЕСТ: первая задача'}).click();
+ await panel.getByTitle('Открыть детали «Ревью»',{exact:true}).click();await panel.getByText('ctx_overview_r2',{exact:false}).waitFor();
+ await page.emulateMedia({colorScheme:'dark'});await page.waitForFunction(()=>document.documentElement.classList.contains('dark'));
+ await page.screenshot({path:path.join(root,'overview-owner-dark.png'),animations:'disabled'});
+ assert.deepEqual(errors,[]);await writeFile(path.join(root,'overview-scroll-result.json'),JSON.stringify({passed:true,scroll,draftPreserved:true,focusPreserved:true,nativeChat:true,provider:'deterministic fixture',modelsCalled:0,errors},null,2));
+}finally{await browser?.close();await writeFile(provider,original);}

@@ -1,5 +1,6 @@
 """Deploy the existing skill set into Codex, preserving original sources and licenses."""
 from pathlib import Path
+from context_rules import documentation_rules, skill_rules, workspace_rules
 import datetime,hashlib,json,os,pwd,re,shutil,subprocess,tarfile,tempfile,urllib.parse
 BASE=Path('/opt/professorit');HOME=Path('/home/node');DEPLOY=BASE/'orca';SOURCE=Path(__file__).resolve().parent
 if os.geteuid()!=0:raise SystemExit('Root required')
@@ -34,8 +35,8 @@ for name in ['professor-kb','professor-kb-root','professor-git-ssh','professor-g
 shutil.copy2(SOURCE/'PLATFORM.md',DEPLOY/'rules/PLATFORM.md')
 workspace=BASE/'agent/projects/harness-multiagents/professor-it/WORKSPACE-AGENTS.md'
 entry=(BASE/'agent/harness-web-home/AGENTS.md').resolve()
-(DEPLOY/'rules/WORKSPACE-AGENTS.md').write_text(translate(workspace.read_text()))
-(DEPLOY/'rules/WORKSPACE-ENTRYPOINT.md').write_text(translate(entry.read_text()))
+(DEPLOY/'rules/WORKSPACE-AGENTS.md').write_text(workspace_rules(translate(workspace.read_text())))
+(DEPLOY/'rules/WORKSPACE-ENTRYPOINT.md').write_text(documentation_rules(translate(entry.read_text())))
 # Skill copies are generated deployment artifacts; source paths and hashes are retained.
 roots=[BASE/'agent/harness-web-home/skills',BASE/'agent/projects/professor-it-marketing/MARKETING/AGENT/skills']
 manifest={'date':datetime.datetime.now(datetime.timezone.utc).isoformat(),'root':str(BASE),'skills':[],'projects':[],'warnings':[]}
@@ -69,8 +70,8 @@ for root in roots:
    policy=policy or {};policy.setdefault('policy',{}).setdefault('allow_implicit_invocation',False)
    policy_path.write_text(yaml.safe_dump(policy,allow_unicode=True,sort_keys=False))
   if 'hooks' in extras:manifest['warnings'].append({'skill':name,'reason':'Original hooks preserved as metadata; DSH hooks are not registered in Codex'})
-  adapter='\n\n## Среда исполнения Orca\n\nПеред использованием прочитай `/opt/professorit/orca/rules/PLATFORM.md`: она определяет доступные инструменты, новые пути и запуск исполнителей. Обращения к инструментам DSH ниже заменяются штатными средствами Codex и Orca по этому уточнению; предметные правила навыка сохраняются.\n'
-  body=translate(parts[2]);(destination/'SKILL.md').write_text('---'+header+'---'+adapter+body)
+  adapter='\n\n## Среда исполнения Orca\n\nПрименяй навык в рамках общих правил Orca. Справочник команд и соответствий DSH: /opt/professorit/orca/rules/PLATFORM.md.\n'
+  body=skill_rules(translate(parts[2]));(destination/'SKILL.md').write_text('---'+header+'---'+adapter+body)
   # References preserve their origin; only stale absolute locations are translated.
   for p in destination.rglob('*.md'):
    if p.name!='SKILL.md' and not p.is_symlink():
@@ -84,8 +85,8 @@ for root in roots:
 subprocess.run(['chmod','-R','a+rX',str(DEPLOY/'skills'),str(DEPLOY/'rules')],check=True)
 print('Skill deployment prepared: '+str(len(manifest['skills'])),flush=True)
 if len(manifest['skills'])!=37:raise RuntimeError('Expected 37 existing skills; inventory changed')
-# The new account reads the generated instructions; archived root rules are untouched.
-(HOME/'.codex/AGENTS.md').write_text((SOURCE/'GLOBAL-AGENTS.md').read_text());shutil.chown(HOME/'.codex/AGENTS.md','orca','orca')
+shutil.copyfile(SOURCE/'GLOBAL-AGENTS.md',DEPLOY/'rules/COMMON.md')
+user(['/usr/bin/python3',str(SOURCE/'context_rules.py'),'--connect-profiles'],check=True)
 for name in ['.profile','.bashrc']:
  p=HOME/name;text=p.read_text() if p.exists() else ''
  line='export PATH=/opt/professorit/orca/bin:/opt/orca/bin:$PATH'
